@@ -3,6 +3,7 @@ package taskMaster;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -33,7 +34,7 @@ public class TaskInfo extends JPanel{
     private boolean completed;
     private Color color;
     private ArrayList<String> categories;
-
+    private SimpleDateFormat formatDate;
     
     
     public TaskInfo(){
@@ -59,8 +60,9 @@ public class TaskInfo extends JPanel{
         categories = new ArrayList<String>(5);
         completed = false;
         
+        formatDate = new SimpleDateFormat("MM/dd/yyyy  HH:mm");
         if(due != null){
-        	displayDueDate = new JLabel(due.toString());
+        	displayDueDate = new JLabel(formatDate.format(due)); 
         } else {
         	displayDueDate = new JLabel("hello!");
         }
