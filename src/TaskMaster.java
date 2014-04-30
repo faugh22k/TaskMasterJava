@@ -77,6 +77,35 @@ public class TaskMaster {
 					
 	}
 	
+	public void initButtons(){
+		defaultS.addActionListener(new ActionListener() 
+	    {           	
+	        public void actionPerformed(ActionEvent e) 
+	        {       
+	            //Order by default queue; needs flush
+	        	taskGrid.changeSort(SortState.relaxedDate); 
+	        }
+	    });
+		dueDate.addActionListener(new ActionListener() 
+	    {           	
+	        public void actionPerformed(ActionEvent e) 
+	        {       
+	            //Order by strictdatequeue
+	        	taskGrid.changeSort(SortState.strictDate);  	 	
+	        }
+	    });
+		priority.addActionListener(new ActionListener() 
+	    {           	
+	        public void actionPerformed(ActionEvent e) 
+	        {       
+	            //still need to flush current task display
+	        	taskGrid.changeSort(SortState.priority);
+	        }
+	    });
+		
+		
+		
+	}
 	
 
 	public static void main(String[] args){
