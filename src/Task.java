@@ -28,6 +28,10 @@ public class Task extends JPanel{
 
     //private Paint background;
     private Color background; 
+    
+    private Color high;
+    private Color normal;
+    private Color low;
 
 
     public Task(String text, ImportanceLevel importance, Date due, Color color){ 
@@ -54,6 +58,18 @@ public class Task extends JPanel{
         this.add(controls, BorderLayout.SOUTH);
         
         background = color;
+        normal = color;
+        high = new Color(255, 255, 160);
+        low = new Color(99, 195, 210);
+        
+        if(importance == ImportanceLevel.high){
+        	background = high;
+        } else if(importance == ImportanceLevel.normal){
+        	background = normal;
+        } else {
+        	background = low;
+        }
+        
         this.setBackground(background); 
         this.setSize(new Dimension(200, 200));
         this.setMaximumSize(new Dimension(200, 200));
@@ -130,5 +146,9 @@ public class Task extends JPanel{
     	textArea.setText(text);  
     }
  
+    
+    public String toString(){
+    	return textArea.getText();
+    }
 }
 

@@ -30,13 +30,13 @@ public class TaskMaster {
 	public void go(){
 		taskGrid = new TaskGrid();
 		taskGrid.createNewTask("Hello world!", ImportanceLevel.normal, new Date(2014, 5, 3));
-		taskGrid.createNewTask("Second Task, task, task, \ntask, task!", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Third Task, task, task task, task!", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Fourth task, yay for tasks!", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Fifth task :) ", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Sixth task \nhello \nthere \neveryone", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Seventh Task, task, task, \ntask, task!", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Eigth Task, task, task, \ntask, task! ", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Second ", ImportanceLevel.high, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Third ", ImportanceLevel.low, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Fourth ", ImportanceLevel.high, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Sixth ", ImportanceLevel.low, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Seventh !", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(2014, 5, 4));
 		
 		
 		JFrame frame = new JFrame();
@@ -67,6 +67,8 @@ public class TaskMaster {
 		toolbar.add(create);
 		toolbar.add(delete);
 		
+		
+		initButtons();
 		//set layout and size of frame
 
 		frame.getContentPane().add(BorderLayout.WEST,toolbar);
@@ -82,6 +84,7 @@ public class TaskMaster {
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
+	        	System.out.println("relaxed date sort");
 	            //Order by default queue; needs flush
 	        	taskGrid.changeSort(SortState.relaxedDate); 
 	        }
@@ -90,6 +93,7 @@ public class TaskMaster {
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
+	        	System.out.println("strict date sort");
 	            //Order by strictdatequeue
 	        	taskGrid.changeSort(SortState.strictDate);  	 	
 	        }
@@ -98,6 +102,7 @@ public class TaskMaster {
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
+	        	System.out.println("priority sort");
 	            //still need to flush current task display
 	        	taskGrid.changeSort(SortState.priority);
 	        }

@@ -279,8 +279,11 @@ public class TaskGrid extends JPanel{
 
     public void changeSort(SortState newSort){
     	if(newSort == sortState){
+    		System.out.println("sort state unchanged");
     		return;
     	} 
+    	
+    	System.out.println("changing sort from " + sortState + " to " + newSort);
     	
     	if(newSort == SortState.priority){
     		currentSorting = orderedByPriority;
@@ -292,18 +295,53 @@ public class TaskGrid extends JPanel{
     	
     	sortState = newSort;
     	
-    	 redisplayAll();
+        redisplayAll();
+    }
+    
+    public void printQueues(){
+    	String relaxed = "Relaxed \n";
+    	String strict = "Strict \n";
+    	String priority = "Priority \n";
+    	String currentSort = "Current \n";
+    	
+    	for(Task current : orderedByRelaxedDate){ 
+    		relaxed += current.getText() + "***\n\n"; 
+    	}
+    	
+    	for(Task current : orderedByStrictDate){ 
+    		strict += current.getText() + "***\n\n"; 
+    	}
+    	
+    	for(Task current : orderedByPriority){ 
+    		priority += current.getText() + "***\n\n"; 
+    	}
+    	
+    	for(Task current : currentSorting){ 
+    		currentSort += current.getText() + "***\n\n"; 
+    	}
+    	 
+    	System.out.println(relaxed +  "\n" + priority + "\n" + strict + "\n***" + currentSort); 
     }
     
     public void redisplayAll(){ 
-    	this.removeAll(); 
-    	//Task[] tasks = new Task[currentSorting.size()]; 
-    	//currentSorting.toArray(tasks);
-    	 
+    	System.out.println("removing everything from the grid");
+    	
+    	this.removeAll();   
+    	//repaint();
+    	String addedOrder = "";
+    	//this.setLayout(new GridLayout(0,5));
     	for(Task current : currentSorting){ 
-    		this.add(current); 
-    		System.out.println("size of queue: " + currentSorting.size()); 
+    		this.add(current);  
+    		addedOrder += current.getText() + ", ";
+    		//repaint();
     	}
+    	System.out.println(addedOrder);
+    	System.out.println(currentSorting.toString());
+    	
+    	//printQueues();
+    	
+    	invalidate();
+    	repaint();
     	 
     }
 }
