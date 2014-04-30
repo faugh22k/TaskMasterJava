@@ -1,33 +1,49 @@
 package taskMaster;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Comparator;
 import java.util.Date;
 
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 /**
  * Encompasses Task data, logic, and display
  */
-public class Task{
+public class Task extends JPanel{
 
     // the buttons area for this task
     private TaskControls controls;
 
     // the text stored in this task
     private TaskText text;
+    
+    private JTextArea textArea;
 
     // the data: priority, dates, color
     private TaskInfo info;
 
     //private Paint background;
+    private Color background; 
 
 
-    public Task(String text, ImportanceLevel importance, Date due){ 
+    public Task(String text, ImportanceLevel importance, Date due, Color color){ 
         this.text = new TaskText(text);
         // TODO probably want more detailed constructor call
         info = new TaskInfo(importance, due);
 
         // TODO add some sort of listener or something?
         controls = new TaskControls();
+        
+        textArea = new JTextArea();
+        
+        this.add(info, BorderLayout.NORTH);
+        this.add(textArea, BorderLayout.CENTER);
+        this.add(controls, BorderLayout.SOUTH);
+        
+        background = color;
+        this.setBackground(background); 
 
         //background = new Paint(Paint.ANTI_ALIAS_FLAG);
         // rgb 191, 227, 74
@@ -35,12 +51,12 @@ public class Task{
         // darker version: 5F8100  (79, 129, 0)
     }
 
-    public Task(String text, ImportanceLevel importance){
-        this(text, importance, null);
+    public Task(String text, ImportanceLevel importance, Color color){
+        this(text, importance, null, color);
     }
 
-    public Task(String text){
-        this(text, ImportanceLevel.normal);
+    public Task(String text, Color color){
+        this(text, ImportanceLevel.normal, color);
     }
 
     public ImportanceLevel getImportance(){

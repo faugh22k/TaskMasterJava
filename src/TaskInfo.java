@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.swing.JComponent; 
+
 /**
  * Store all of the settings of the task
  * Display the important ones (title, if we have titles, and due date)
  */
-public class TaskInfo {
+public class TaskInfo extends JComponent{
 
     // time created, edited, and due
     private Date created;

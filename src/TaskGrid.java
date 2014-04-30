@@ -1,14 +1,18 @@
 package taskMaster;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+import javax.swing.JPanel;
+
 /**
  * Created by kcf412 on 4/26/14.
  */ 
-public class TaskGrid{
+public class TaskGrid extends JPanel{
 
     // TODO after adding priority queues, might well not need all those linked lists
     private String[] texts = {"aaa", "bbb", "ccc", "ddd", "eee", "fff", "eee", "hhh", "iii"};
@@ -43,6 +47,9 @@ public class TaskGrid{
 
     private DisplayState displayState;
     private SortState sortState; 
+    
+    private Color background;
+    private Color taskColor;
 
     public TaskGrid(){ ;
         // TODO read in initial values from memory somewhere??
@@ -63,6 +70,11 @@ public class TaskGrid{
 
         displayState = DisplayState.all;
         sortState = SortState.relaxedDate;
+        
+        background = new Color(32, 32, 32); 
+        this.setBackground(background); 
+        
+        taskColor = new Color(191, 227, 74);
 
     }
 
@@ -133,6 +145,9 @@ public class TaskGrid{
 
         orderedByRelaxedDate.remove(task);
         orderedByRelaxedDate.add(task);
+        
+        // infinite rows, five columns
+        this.setLayout(new GridLayout(0, 5));
     }
 
     // deletes the task
@@ -146,6 +161,8 @@ public class TaskGrid{
         orderedByPriority.remove(task);
         orderedByStrictDate.remove(task);
         orderedByRelaxedDate.remove(task);
+        
+        this.remove(task);
     }
 
     // for debugging: checks to see if any tasks are in the wrong place
@@ -194,7 +211,7 @@ public class TaskGrid{
 
     // creates a new task to add to the grid, and the lists
     public void createNewTask(String text, ImportanceLevel level, Date due){
-        Task newTask = new Task(text, level, due);
+        Task newTask = new Task(text, level, due, taskColor);
 
         allTasks.add(newTask);
         orderedByPriority.add(newTask);
@@ -215,6 +232,7 @@ public class TaskGrid{
             inFuture.add(newTask);
         }
 
+        this.add(newTask);
     }
 
     // goes through the tasks, updates current and inFuture
