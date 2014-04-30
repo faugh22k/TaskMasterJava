@@ -282,13 +282,29 @@ public class TaskGrid extends JPanel{
     		return;
     	} 
     	
-    	if(sortState == SortState.priority){
+    	if(newSort == SortState.priority){
     		currentSorting = orderedByPriority;
-    	} else if (sortState == SortState.relaxedDate){
+    	} else if (newSort == SortState.relaxedDate){
     		currentSorting = orderedByRelaxedDate;
     	} else {
     		currentSorting = orderedByStrictDate;
     	}
+    	
+    	sortState = newSort;
+    	
+    	 redisplayAll();
+    }
+    
+    public void redisplayAll(){ 
+    	this.removeAll(); 
+    	//Task[] tasks = new Task[currentSorting.size()]; 
+    	//currentSorting.toArray(tasks);
+    	 
+    	for(Task current : currentSorting){ 
+    		this.add(current); 
+    		System.out.println("size of queue: " + currentSorting.size()); 
+    	}
+    	 
     }
 }
 
