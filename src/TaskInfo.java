@@ -59,6 +59,7 @@ public class TaskInfo extends JPanel{
         importance = level;
         categories = new ArrayList<String>(5);
         completed = false;
+        this.setOpaque(false);
         
         formatDate = new SimpleDateFormat("MM/dd/yyyy  HH:mm");
         if(due != null){

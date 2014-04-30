@@ -51,7 +51,7 @@ public class TaskGrid extends JPanel{
     private Color background;
     private Color taskColor;
 
-    public TaskGrid(){ ;
+    public TaskGrid(){  
         // TODO read in initial values from memory somewhere??
 
     	// infinite rows, five columns
@@ -275,6 +275,20 @@ public class TaskGrid extends JPanel{
                 selectedCategory.add(current);
             }
         }
+    }
+
+    public void changeSort(SortState newSort){
+    	if(newSort == sortState){
+    		return;
+    	} 
+    	
+    	if(sortState == SortState.priority){
+    		currentSorting = orderedByPriority;
+    	} else if (sortState == SortState.relaxedDate){
+    		currentSorting = orderedByRelaxedDate;
+    	} else {
+    		currentSorting = orderedByStrictDate;
+    	}
     }
 }
 

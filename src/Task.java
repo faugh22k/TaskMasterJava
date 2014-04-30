@@ -37,6 +37,7 @@ public class Task extends JPanel{
 
         // TODO add some sort of listener or something?
         controls = new TaskControls();
+         
         
         textArea = new JTextArea(text);
         textArea.setLineWrap(true);
@@ -46,7 +47,7 @@ public class Task extends JPanel{
         JLabel testing = new JLabel("date area"); 
         //this.add(testing, BorderLayout.NORTH); 
          
-        //this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
         
         this.add(info, BorderLayout.NORTH); 
         this.add(textArea, BorderLayout.CENTER);
@@ -55,6 +56,8 @@ public class Task extends JPanel{
         background = color;
         this.setBackground(background); 
         this.setSize(new Dimension(200, 200));
+        this.setMaximumSize(new Dimension(200, 200));
+        this.setMinimumSize(new Dimension(200, 200)); 
 
         //background = new Paint(Paint.ANTI_ALIAS_FLAG);
         // rgb 191, 227, 74
