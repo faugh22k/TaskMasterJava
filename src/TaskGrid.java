@@ -1,14 +1,4 @@
-package com.example.myfirstapp.app;
-
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.Build;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridLayout;
-import android.widget.TextView;
+package taskMaster;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,10 +7,8 @@ import java.util.PriorityQueue;
 
 /**
  * Created by kcf412 on 4/26/14.
- */
-// TODO should change minimum api version to ...14? (ice cream sandwich)
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-public class TaskGrid extends BaseAdapter {
+ */ 
+public class TaskGrid{
 
     // TODO after adding priority queues, might well not need all those linked lists
     private String[] texts = {"aaa", "bbb", "ccc", "ddd", "eee", "fff", "eee", "hhh", "iii"};
@@ -54,12 +42,9 @@ public class TaskGrid extends BaseAdapter {
     private PriorityQueue<Task> currentSorting;
 
     private DisplayState displayState;
-    private SortState sortState;
+    private SortState sortState; 
 
-    private Context context;
-
-    public TaskGrid(Context context){
-        this.context = context;
+    public TaskGrid(){ ;
         // TODO read in initial values from memory somewhere??
 
         allTasks = new LinkedList<Task>();
@@ -209,7 +194,7 @@ public class TaskGrid extends BaseAdapter {
 
     // creates a new task to add to the grid, and the lists
     public void createNewTask(String text, ImportanceLevel level, Date due){
-        Task newTask = new Task(text, level, due, context);
+        Task newTask = new Task(text, level, due);
 
         allTasks.add(newTask);
         orderedByPriority.add(newTask);
@@ -267,51 +252,5 @@ public class TaskGrid extends BaseAdapter {
             }
         }
     }
-
-
-
-
-    /* (non-Javadoc)
- * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
- */
-    @Override
-    public View getView(int index, View convertView, ViewGroup parent) {
-        //this probably needs to be moved for efficiency
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View gridView;
-
-        if (convertView == null) {
-
-            gridView = new View(context);
-            //get layout form main screen
-            gridView = inflater.inflate(R.layout.activity_main, null);
-
-            // set task text into textview
-            TextView textView = (TextView) gridView.findViewById(R.id.grid_item_text);
-            textView.setText(texts[index]);
-
-        } else {
-            gridView = (View) convertView;
-        }
-
-        return gridView;
-    }
-
-
-    @Override
-    public int getCount() {
-        return currentSorting.size();
-    }
-
-    @Override
-    public Task getItem(int index) {
-        Task[] tasks = (Task[])currentSorting.toArray();
-        return tasks[index];
-    }
-
-    @Override
-    public long getItemId(int index) {
-        return index;
-    }
 }
+

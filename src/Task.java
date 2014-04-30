@@ -1,18 +1,13 @@
-package com.example.myfirstapp.app;
+package taskMaster;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.view.View;
-
+import java.awt.Color;
 import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Encompasses Task data, logic, and display
  */
-public class Task extends View{
+public class Task{
 
     // the buttons area for this task
     private TaskControls controls;
@@ -23,30 +18,29 @@ public class Task extends View{
     // the data: priority, dates, color
     private TaskInfo info;
 
-    private Paint background;
+    //private Paint background;
 
 
-    public Task(String text, ImportanceLevel importance, Date due, Context context){
-        super(context);
+    public Task(String text, ImportanceLevel importance, Date due){ 
         this.text = new TaskText(text);
         // TODO probably want more detailed constructor call
         info = new TaskInfo(importance, due);
 
         // TODO add some sort of listener or something?
-        controls = new TaskControls(context);
+        controls = new TaskControls();
 
-        background = new Paint(Paint.ANTI_ALIAS_FLAG);
+        //background = new Paint(Paint.ANTI_ALIAS_FLAG);
         // rgb 191, 227, 74
-        background.setColor(0xBFE34A);
+        //background.setColor(0xBFE34A);
         // darker version: 5F8100  (79, 129, 0)
     }
 
-    public Task(String text, ImportanceLevel importance, Context context){
-        this(text, importance, null, context);
+    public Task(String text, ImportanceLevel importance){
+        this(text, importance, null);
     }
 
-    public Task(String text, Context context){
-        this(text, ImportanceLevel.normal, context);
+    public Task(String text){
+        this(text, ImportanceLevel.normal);
     }
 
     public ImportanceLevel getImportance(){
@@ -96,9 +90,6 @@ public class Task extends View{
     public TaskText getTaskText() { return text;}
 
     public String getText() { return text.getText();}
-
-    @Override
-    public void onDraw(Canvas canvas){
-        canvas.drawRect(0, 0, 100, 100, background);
-    }
+ 
 }
+

@@ -1,4 +1,4 @@
-package com.example.myfirstapp.app;
+package taskMaster;
 
 /**
  * Store and display the text for the task.

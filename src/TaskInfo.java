@@ -1,7 +1,6 @@
-package com.example.myfirstapp.app;
+package taskMaster;
 
-import android.graphics.Color;
-
+import java.awt.Color;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
@@ -129,3 +128,4 @@ public class TaskInfo {
         return categories.contains(category);
     }
 }
+
