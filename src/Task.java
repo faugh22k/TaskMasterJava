@@ -2,9 +2,11 @@ package taskMaster;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Comparator;
 import java.util.Date;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -36,14 +38,23 @@ public class Task extends JPanel{
         // TODO add some sort of listener or something?
         controls = new TaskControls();
         
-        textArea = new JTextArea();
+        textArea = new JTextArea(text);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setOpaque(false);
         
-        this.add(info, BorderLayout.NORTH);
+        JLabel testing = new JLabel("date area"); 
+        //this.add(testing, BorderLayout.NORTH); 
+         
+        //this.setLayout(new BorderLayout());
+        
+        this.add(info, BorderLayout.NORTH); 
         this.add(textArea, BorderLayout.CENTER);
         this.add(controls, BorderLayout.SOUTH);
         
         background = color;
         this.setBackground(background); 
+        this.setSize(new Dimension(200, 200));
 
         //background = new Paint(Paint.ANTI_ALIAS_FLAG);
         // rgb 191, 227, 74
@@ -103,9 +114,18 @@ public class Task extends JPanel{
         info.removeCategory(category);
     }
 
-    public TaskText getTaskText() { return text;}
+    public TaskText getTaskText() { 
+    	return text;
+    }
 
-    public String getText() { return text.getText();}
+    public String getText() { 
+    	//return text.getText();
+    	return textArea.getText();
+    } 
+    
+    public void setText(String text){
+    	textArea.setText(text);  
+    }
  
 }
 

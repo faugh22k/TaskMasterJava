@@ -3,6 +3,8 @@ package taskMaster;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.Date;
+
 import javax.swing.JComponent.*;
 
 public class TaskMaster {
@@ -20,8 +22,22 @@ public class TaskMaster {
 	JLabel manage;
 	JButton create;
 	JButton delete;
+	 
+	JPanel tasksPanel;
+	
+	TaskGrid taskGrid;
 	
 	public void go(){
+		taskGrid = new TaskGrid();
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.normal, new Date(2014, 5, 3));
+		taskGrid.createNewTask("Second Task, task, task, \ntask, task!", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Third Task, task, task task, task!", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Fourth task, yay for tasks!", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Fifth task :) ", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Sixth task \nhello \nthere \neveryone", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Seventh Task, task, task, \ntask, task!", ImportanceLevel.normal, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Eigth Task, task, task, \ntask, task! ", ImportanceLevel.normal, new Date(2014, 5, 4));
+		
 		
 		JFrame frame = new JFrame();
 		
@@ -54,14 +70,19 @@ public class TaskMaster {
 		//set layout and size of frame
 
 		frame.getContentPane().add(BorderLayout.WEST,toolbar);
+		frame.getContentPane().add(BorderLayout.CENTER,taskGrid);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,500);
 		frame.setVisible(true);
 					
 	}
 	
-	//Move this up when done--tasks panel
-	JPanel tasksPanel;
+	
 
-
+	public static void main(String[] args){
+		TaskMaster taskMaster = new TaskMaster();
+		taskMaster.go();
+	}
 }
+
+

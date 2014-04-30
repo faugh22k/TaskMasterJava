@@ -1,5 +1,8 @@
 package taskMaster;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.swing.JComponent;   
 
 /**
@@ -7,8 +10,16 @@ import javax.swing.JComponent;
  */
 public class TaskControls extends JComponent{
 
+	Color background; 
 
     public TaskControls() { 
         // TODO set horizontal
+    	background = new Color(79, 129, 0);  
+    	this.setBackground(background); 
+    } 
+    
+    public void paint(Graphics g){
+    	g.setColor(background);
+    	g.fillRect(0, 0, 200, 200);
     }
 }

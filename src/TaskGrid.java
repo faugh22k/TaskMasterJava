@@ -54,6 +54,14 @@ public class TaskGrid extends JPanel{
     public TaskGrid(){ ;
         // TODO read in initial values from memory somewhere??
 
+    	// infinite rows, five columns
+    	GridLayout layout = new GridLayout(0, 5);  
+    	layout.setHgap(10);
+    	layout.setVgap(10); 
+    	
+    	this.setLayout(layout);   
+    	
+    
         allTasks = new LinkedList<Task>();
         low = new LinkedList<Task>();
         normal = new LinkedList<Task>();
@@ -74,7 +82,7 @@ public class TaskGrid extends JPanel{
         background = new Color(32, 32, 32); 
         this.setBackground(background); 
         
-        taskColor = new Color(191, 227, 74);
+        taskColor = new Color(191, 227, 74); 
 
     }
 
@@ -145,9 +153,7 @@ public class TaskGrid extends JPanel{
 
         orderedByRelaxedDate.remove(task);
         orderedByRelaxedDate.add(task);
-        
-        // infinite rows, five columns
-        this.setLayout(new GridLayout(0, 5));
+         
     }
 
     // deletes the task

@@ -1,5 +1,6 @@
 package taskMaster;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -7,17 +8,21 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.JComponent; 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Store all of the settings of the task
  * Display the important ones (title, if we have titles, and due date)
  */
-public class TaskInfo extends JComponent{
+public class TaskInfo extends JPanel{
 
     // time created, edited, and due
     private Date created;
     private Date edited;
     private Date due;
+    
+    private JLabel displayDueDate;
 
     // low, normal, or high importance possible
     private ImportanceLevel importance;
@@ -25,13 +30,12 @@ public class TaskInfo extends JComponent{
     // TODO set to true if due is within certain range of current date
     // TODO said determination (namely, retrieval of current date) not yet done
     private boolean isCurrent;
-
     private boolean completed;
-
     private Color color;
-
     private ArrayList<String> categories;
 
+    
+    
     public TaskInfo(){
         this(ImportanceLevel.normal, true, null);
     }
@@ -44,6 +48,7 @@ public class TaskInfo extends JComponent{
         this(level, true, due);
     }
 
+    // primary constructor 
     public TaskInfo(ImportanceLevel level, boolean isCurrent, Date due){
         // TODO must decide how to deal with getting due date, decided whether it's current
         created = new Date();
@@ -53,6 +58,13 @@ public class TaskInfo extends JComponent{
         importance = level;
         categories = new ArrayList<String>(5);
         completed = false;
+        
+        if(due != null){
+        	displayDueDate = new JLabel(due.toString());
+        } else {
+        	displayDueDate = new JLabel("hello!");
+        }
+        this.add(displayDueDate, BorderLayout.EAST);
     }
 
     public boolean determineIsCurrent(){
