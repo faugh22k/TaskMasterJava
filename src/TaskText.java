@@ -23,6 +23,7 @@ public class TaskText extends JPanel{
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setOpaque(false);
+        textArea.setEditable(false);
         
         this.setOpaque(false);   
         this.setLayout(new BorderLayout());

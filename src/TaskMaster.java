@@ -30,7 +30,7 @@ public class TaskMaster {
 	public void go(){
 		taskGrid = new TaskGrid();
 		taskGrid.createNewTask("Hello world!", ImportanceLevel.normal, new Date(2014, 5, 3));
-		taskGrid.createNewTask("Second hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi hi ", ImportanceLevel.high, new Date(2014, 5, 4));
+		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.high, new Date(2014, 5, 4));
 		taskGrid.createNewTask("Third ", ImportanceLevel.low, new Date(2014, 5, 4));
 		taskGrid.createNewTask("Fourth ", ImportanceLevel.high, new Date(2014, 5, 4));
 		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(2014, 5, 4));

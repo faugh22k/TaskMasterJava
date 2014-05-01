@@ -329,21 +329,36 @@ public class TaskGrid extends JPanel{
     	System.out.println("removing everything from the grid");
     	
     	this.removeAll();   
+    	
     	//repaint();
     	String addedOrder = "";
     	//this.setLayout(new GridLayout(0,5));
+    	
     	for(Task current : currentSorting){ 
     		this.add(current);  
     		addedOrder += current.getText() + ", ";
     		//repaint();
-    	}
+    	} 
+    	
+    	//this.add(currentSorting.peek());
+    	 
+    	//this.setLayout(new GridLayout(0,5));
+    	
+    	/*Task[] tasks = new Task[currentSorting.size()];
+    	currentSorting.toArray(tasks);
+    	 
+    	for (int i = 0; i < 3; i++){
+    		this.add(tasks[i]);
+    	}*/
+    	
     	System.out.println(addedOrder);
     	System.out.println(currentSorting.toString());
     	
     	//printQueues();
     	
-    	invalidate();
+    	//invalidate();
     	repaint();
+    	validate();
     	 
     }
 }
