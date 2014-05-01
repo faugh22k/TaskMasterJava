@@ -11,7 +11,23 @@ import javax.swing.*;
 
 
 
-public class EditScreen extends JFrame {
+public class EditScreen{
+	
+	private JFrame frame;
+	private JPanel topToolbar;
+	private JLabel category;
+	private JComboBox categories;
+	private JTextField date;
+	
+	
+	private JPanel textPanel;
+	//create text field for inputting search information
+	private JTextField newText;
+	
+	private JPanel bottomPanel;
+	private JComboBox priority;
+	private JButton cancel;
+	private JButton save;
 	
 	//temp task and features
 	private String textInput;
@@ -20,29 +36,15 @@ public class EditScreen extends JFrame {
 	private String tempCategory = null;
 	private Task tempTask;
 	
-	private EditScreen frame; 
-	private JPanel topToolbar;
-	private JLabel category;
-	private JComboBox categories;
-	private JTextField date;
-	
-	//create textfield
-	private JPanel textPanel;
-	//create text field for inputting search information
-	private JTextField newText;
-	
-	private JPanel buttonPanel;
-	private JComboBox priority;
-	private JButton cancel;
-	private JButton save;
-	
 	private String[] catS= {"Personal","Work","Other"};
 	private String[] priorityS = {"Low","Normal","High"};
 	
-
+	EditScreen(){
+		go();
+		initButtons();
+	}
 	public void go(){
-		frame = new EditScreen();
-		
+		frame = new JFrame();
 		topToolbar = new JPanel();
 		topToolbar.setBackground(Color.darkGray);
 		topToolbar.setLayout(new BoxLayout(topToolbar, BoxLayout.X_AXIS));
@@ -53,25 +55,30 @@ public class EditScreen extends JFrame {
 		topToolbar.add(categories);
 		topToolbar.add(date);
 		
+		
+		textPanel = new JPanel();
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+		System.out.println("*******************text panel = " + textPanel);
 		textPanel.setBackground(Color.darkGray);
 		newText = new JTextField(25);
 		textPanel.add(newText);
 		
-		buttonPanel.setLayout(new BoxLayout(topToolbar, BoxLayout.X_AXIS));
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		priority = new JComboBox(priorityS);
 		cancel = new JButton("Cancel");
 		save = new JButton("Save");
-		buttonPanel.add(priority);
-		buttonPanel.add(cancel);
-		buttonPanel.add(save);
+		bottomPanel.add(priority);
+		bottomPanel.add(cancel);
+		bottomPanel.add(save);
 		
 	
 		//set layout and size of frame
 
 		frame.getContentPane().add(BorderLayout.NORTH,topToolbar);
 		frame.getContentPane().add(BorderLayout.CENTER,textPanel);
-		frame.getContentPane().add(BorderLayout.SOUTH,buttonPanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(BorderLayout.SOUTH,bottomPanel);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500,500);
 		frame.setVisible(true);
 					
@@ -125,5 +132,7 @@ public class EditScreen extends JFrame {
 		Date tempDate = new Date(dates[2],dates[1],dates[0]); //this is deprecated, is this correct order?
 		return tempDate;
 	}
+	
+	public JFrame getJFrame(){ return frame;}
 	
 }

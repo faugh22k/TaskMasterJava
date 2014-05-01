@@ -126,7 +126,7 @@ public class TaskMaster {
 	        public void actionPerformed(ActionEvent e) 
 	        {       
 	        	EditScreen ed = new EditScreen();
-	        	frame.getContentPane().add(BorderLayout.CENTER,ed);
+	        	frame.getContentPane().add(BorderLayout.CENTER,ed.getJFrame());
 	        }
 	    });
 		delete.addActionListener(new ActionListener() 
