@@ -53,15 +53,15 @@ public class TaskMaster {
 		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(2014, 5, 5));
 		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, new Date(2014, 5, 4));*/
 		
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, new Date(14, 1, 11)); 
-		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, new Date(14, 1, 10));   
-		taskGrid.createNewTask("Third ", ImportanceLevel.high, new Date(14, 1, 9));
-		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, new Date(14, 1, 8));
-		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(14, 1, 7)); // commented out from here
-		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, new Date(14, 1, 6));
-		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, new Date(14, 1, 5));
-		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(14, 1, 4)); 
-		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, new Date(14, 1, 3)); 
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "05/01"); 
+		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
+		taskGrid.createNewTask("Third ", ImportanceLevel.high, "05/02");
+		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, "05/03");
+		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, "05/04"); // commented out from here
+		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, "05/09");
+		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, "05/08");
+		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, "05/06"); 
+		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, "05/07"); 
 		 
 		
 		

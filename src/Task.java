@@ -45,7 +45,7 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
     private TaskMaster taskMaster;
 
 
-    public Task(String text, ImportanceLevel importance, Date due, TaskMaster taskMaster) {  
+    public Task(String text, ImportanceLevel importance, String due, TaskMaster taskMaster) {  
         this.text = new TaskText(text); 
         this.taskMaster = taskMaster;
          
@@ -106,13 +106,13 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
         // darker version: 5F8100  (79, 129, 0) 
     }
 
-    public Task(String text, ImportanceLevel importance, TaskMaster taskMaster){ 
+   /* public Task(String text, ImportanceLevel importance, TaskMaster taskMaster){ 
         this(text, importance, null, taskMaster);
     }
 
     public Task(String text, TaskMaster taskMaster){
         this(text, ImportanceLevel.normal, taskMaster); 
-    }
+    }*/
 
     public ImportanceLevel getImportance(){
         return info.getImportance();
@@ -122,8 +122,8 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
         return info.getCurrent();
     }
 
-    public boolean reevaluateCurrent(){
-        return info.determineIsCurrent();
+    public boolean reevaluateCurrent(Date now){
+        return info.determineIsCurrent(now);
     }
 
     public Date getDue(){
@@ -221,6 +221,10 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
 			taskMaster.removeSelection(this); 
 		}
 		repaint();
+	}
+	
+	public void parseDueDate(String due){
+		info.parseDue(due); 
 	}
 	
 	@Override

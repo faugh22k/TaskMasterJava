@@ -3,6 +3,7 @@ package taskMaster;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,44 +38,79 @@ public class TaskInfo extends JPanel{
     private SimpleDateFormat formatDate;
     
     
-    public TaskInfo(){
-        this(ImportanceLevel.normal, true, null);
-    }
-
-    public TaskInfo(ImportanceLevel level){
-        this(level, true, null);
-    }
-
-    public TaskInfo(ImportanceLevel level, Date due){
-        this(level, true, due);
-    }
+   
 
     // primary constructor 
-    public TaskInfo(ImportanceLevel level, boolean isCurrent, Date due){
+    public TaskInfo(ImportanceLevel level, String due){
         // TODO must decide how to deal with getting due date, decided whether it's current
         created = new Date();
         edited = created;
-        this.due = due;
-        this.isCurrent = isCurrent;
+        
         importance = level;
         categories = new ArrayList<String>(5);
         completed = false;
         this.setOpaque(false);
+       
         
-        formatDate = new SimpleDateFormat("MM/dd/yyyy  HH:mm");
-        if(due != null){
-        	displayDueDate = new JLabel(formatDate.format(due)); 
+        formatDate = new SimpleDateFormat("MM/dd"); //new SimpleDateFormat("MM/dd/yyyy  HH:mm"); 
+        try {
+			this.due = formatDate.parse(due);
+		} catch (ParseException e) {}
+        
+        if(this.due != null){
+        	displayDueDate = new JLabel(formatDate.format(this.due)); 
         } else {
-        	displayDueDate = new JLabel("hello!");
+        	displayDueDate = new JLabel(""); 
         }
         this.add(displayDueDate, BorderLayout.EAST);
+        
+        // automatically gives initialized to current date, time
+        Date now = new Date();
+        determineIsCurrent(now);
     }
 
-    public boolean determineIsCurrent(){
-        // TODO figure out how to decide isCurrent
-        boolean updated = true;
-        isCurrent = updated;
+    public boolean determineIsCurrent(Date now){ 
+    	
+    	int[] current = getMonthDay(now);
+    	int[] dueBy = getMonthDay(due);
+    	System.out.println("\n\n                      !!!!!!!!!!!!!!!Determining is Current!!!!!!!!!!!!");
+    	boolean updated = false;
+    	boolean tmp = false;
+    	if(current[0] == dueBy[0] && (current[1] >= dueBy[1] && current[1] <= dueBy[1] + 2 )){
+    		System.out.println("I am a current task!");
+    		tmp = true;
+    	} else {
+    		System.out.println("I am a future task!");
+    	}
+        
+    	System.out.println("now: " + current[0] + "/" + current[1]);
+    	System.out.println("due: " + dueBy[0] + "/" + dueBy[1]);
+    	
+    	if (isCurrent != tmp){
+    		updated = true;
+    	}
+    	
+        isCurrent = tmp;
+        System.out.println("               !!!!!!!!!!!!!!!Returning from Determining is Current!!!!!!!!!!!!\n\n");
         return updated;
+    }
+    
+    public int[] getMonthDay(Date date){
+    	int[] data = new int[2];
+    	
+    	String format = formatDate.format(date);
+    	
+    	String[] extracted = format.split("/"); 
+    	try {
+    		int month = Integer.parseInt(extracted[0]);
+    		int day = Integer.parseInt(extracted[0]);
+    		data[0] = month;
+    		data[1] = day;
+    	} catch (NumberFormatException e){
+    		data = null;
+    	}
+    	
+    	return data;
     }
 
     public ImportanceLevel getImportance(){
@@ -111,6 +147,13 @@ public class TaskInfo extends JPanel{
         due = date;
         displayDueDate.setText(getFormattedDate());
         
+    }
+    
+    public void parseDue(String due){
+    	try {
+    		Date tmp = formatDate.parse(due);
+			this.due = tmp; 
+		} catch (ParseException e) {}
     }
     
     public String getFormattedDate(){

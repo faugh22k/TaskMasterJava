@@ -143,7 +143,7 @@ public class EditScreen{
 	        	//extract all the info into a task
 	        	//get date
 	        	String dateInput = date.getText(); 
-	        	tempDate = getInputtedDate(dateInput);//problems w deprecated date
+	        	//tempDate = getInputtedDate(dateInput);//problems w deprecated date
 	        	//get new task text
 	        	textInput = newText.getText();
 	        	//get importance level
@@ -158,7 +158,7 @@ public class EditScreen{
 	        	tempCategory = (String)categories.getSelectedItem();
 	        	//make task, how do we put it into taskgrid?
 	        	 //fake color passed for now, category should be passed last
-	        	tempTask = new Task(textInput, tempImp, tempDate, taskMaster);
+	        	tempTask = new Task(textInput, tempImp, dateInput, taskMaster);
 	        	
 	        	System.out.println("A task was made with text:"+ " " + tempTask.getText());
 	        	//frame.dispose();
@@ -189,18 +189,21 @@ public class EditScreen{
 	}
 	
 	private Date getInputtedDate(String s){
-		if(s.equals("")){
+		if(s.equals("") || s.equals("MM/dd")){
 			return null;
 		}
 		
-		String d = s;
+		/*String d = s;
 		String[] tokens = d.split("/");
 		int[] dates= new int[tokens.length];
 		for (int i=0; i<tokens.length;i++){
 		  dates[i] = Integer.parseInt(tokens[i]);	
 		}
 		Date tempDate = new Date(dates[2],dates[1],dates[0]); //this is deprecated, is this correct order?
-		return tempDate;
+		return tempDate;*/
+		
+		//Date date = task.
+		return null;
 	}
 	
 	public JPanel getJPanel(){ return screenPanel;}

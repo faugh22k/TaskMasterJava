@@ -232,7 +232,7 @@ public class TaskGrid extends JPanel{
     }
 
     // creates a new task to add to the grid, and the lists
-    public void createNewTask(String text, ImportanceLevel level, Date due){
+    public void createNewTask(String text, ImportanceLevel level, String due){
         Task newTask = new Task(text, level, due, taskMaster);
 
         	finishTaskCreateOrSwap(newTask);
@@ -273,10 +273,10 @@ public class TaskGrid extends JPanel{
     }
 
     // goes through the tasks, updates current and inFuture
-    public void updateTimeGrouping(){
+    public void updateTimeGrouping(Date now){
         for(Task task: allTasks){
             boolean original = task.getIsCurrent();
-            if(original != task.reevaluateCurrent()){
+            if(original != task.reevaluateCurrent(now)){
                 if(original){
                     current.remove(task);
                     inFuture.add(task);
