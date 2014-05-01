@@ -11,9 +11,8 @@ import javax.swing.*;
 
 
 
-public class EditScreen{
+public class EditScreen extends JPanel{
 	
-	private JPanel screenPanel;
 	private JPanel topToolbar;
 	private JLabel category;
 	private JComboBox categories;
@@ -48,21 +47,10 @@ public class EditScreen{
 	EditScreen(TaskMaster taskMaster, Task toEdit){
 		this.taskMaster = taskMaster;
 		editingTask = toEdit;
-		
-		if(editingTask != null){
-			background = editingTask.getColor();
-		} else {
-			background = Task.normal;
-		}
 		textAreaShading = new Color(10, 20, 20, 20);
-		
-		go();
-		initListeners();
-	}
-	public void go(){
-		screenPanel = new JPanel();
-		screenPanel.setLayout(new BorderLayout(500,500));
-		screenPanel.setBackground(background);
+		initBackground();
+		this.setLayout(new BorderLayout(500,500));
+		this.setBackground(background); //this might not be initializedset
 		
 		topToolbar = new JPanel();
 		topToolbar.setBorder(BorderFactory.createEmptyBorder(5,5,5,5)); 
@@ -89,11 +77,7 @@ public class EditScreen{
 		newText.setLineWrap(true);
 		newText.setWrapStyleWord(true);
 		newText.setVisible(true);
-		if(editingTask != null){
-			newText.setText(editingTask.getText());
-		}
 		textPanel.add(BorderLayout.CENTER, newText);
-		
 		textPanel.setVisible(true);
 		
 		bottomPanel = new JPanel();
@@ -101,11 +85,6 @@ public class EditScreen{
 		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		priority = new JComboBox(priorityS); 
-		if(editingTask == null){
-			priority.setSelectedIndex(1);
-		} else {
-			priority.setSelectedIndex(editingTask.getImportance().ordinal()); 
-		}
 		cancel = new JButton("Cancel");
 		save = new JButton("Save");
 		bottomPanel.add(new JLabel("Choose Priority:"));
@@ -113,21 +92,17 @@ public class EditScreen{
 		bottomPanel.add(cancel);
 		bottomPanel.add(save);
 		
-	
+		
 		//set layout and size of frame
-		screenPanel.add(topToolbar,BorderLayout.NORTH);
-		screenPanel.add(textPanel, BorderLayout.CENTER); 
+		this.add(topToolbar,BorderLayout.NORTH);
+		this.add(textPanel, BorderLayout.CENTER); 
 		//screenPanel.add(newText, BorderLayout.CENTER); 
-		screenPanel.add(bottomPanel, BorderLayout.SOUTH);
-		
-		//frame.getContentPane().add(BorderLayout.NORTH,topToolbar);
-		//frame.getContentPane().add(BorderLayout.CENTER,textPanel);
-		//frame.getContentPane().add(BorderLayout.SOUTH,bottomPanel);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setSize(500,500);
-		screenPanel.setVisible(true);
-		
-	} 
+		this.add(bottomPanel, BorderLayout.SOUTH);
+		this.setVisible(true);
+		initListeners();
+		initEditingTask();
+	}
+	
 	private void initListeners(){
 		cancel.addActionListener(new ActionListener() 
 	    {           	
@@ -185,9 +160,24 @@ public class EditScreen{
 	}
 	
 	public void resetBackground(){
-		screenPanel.setBackground(background);
+		this.setBackground(background);
 	}
-	
+	public void initEditingTask(){
+		if(editingTask != null){
+			newText.setText(editingTask.getText());
+			priority.setSelectedIndex(editingTask.getImportance().ordinal()); 
+		} else {
+			priority.setSelectedIndex(1);
+			newText.setText("Please input text here.");
+		}
+	}
+	public void initBackground(){
+		if(editingTask != null){
+			background = editingTask.getColor();
+		} else {
+			background = Task.normal;
+		}
+	}
 	private Date getInputtedDate(String s){
 		if(s.equals("") || s.equals("MM/dd")){
 			return null;
@@ -206,6 +196,6 @@ public class EditScreen{
 		return null;
 	}
 	
-	public JPanel getJPanel(){ return screenPanel;}
+	public JPanel getJPanel(){ return this;}
 	
 }
