@@ -73,8 +73,8 @@ public class TaskGrid extends JPanel{
         inFuture = new LinkedList<Task>();
 
 
-        orderedByStrictDate = new TaskSorter(new TaskOrderRelaxedDueDate());
-        orderedByRelaxedDate = new TaskSorter(new TaskOrderStrictDueDate());
+        orderedByStrictDate = new TaskSorter(new TaskOrderStrictDueDate());
+        orderedByRelaxedDate = new TaskSorter(new TaskOrderRelaxedDueDate());
         orderedByPriority = new TaskSorter(new TaskOrderPriority()); 
 
         currentSorting = orderedByRelaxedDate;
@@ -311,9 +311,12 @@ public class TaskGrid extends JPanel{
     	
     	if(newSort == SortState.priority){
     		currentSorting = orderedByPriority;
-    	} else if (newSort == SortState.relaxedDate){
+    	} 
+    	else if (newSort == SortState.relaxedDate){
     		currentSorting = orderedByRelaxedDate;
-    	} else {
+    	} 
+    	else {
+    		System.out.println("now sorting by strict date!");
     		currentSorting = orderedByStrictDate;
     	}
     	
