@@ -212,17 +212,14 @@ public class TaskMaster {
 	}
 	
 	public void closeEditScreen(boolean saved, Task original, Task newTask){
-		
-		
-		if(!saved){
-			switchEditToGrid();
-			
-			if(original != null){
+		if(original != null){
 				System.out.println("deselecting the task that was selected");
 				selected.remove(original);
 				original.changeSelection();
 			}
-			
+		
+		if(!saved){
+			switchEditToGrid(); 
 			return;
 		}
 		
@@ -232,6 +229,9 @@ public class TaskMaster {
 		} else {
 			taskGrid.addNewTask(newTask);
 		}
+		
+		newTask.changeSelection();
+		selected.add(newTask);
 		
 		switchEditToGrid();
 	}
