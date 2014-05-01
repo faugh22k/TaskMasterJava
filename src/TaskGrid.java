@@ -60,7 +60,7 @@ public class TaskGrid extends JPanel{
     	layout.setHgap(10);
     	layout.setVgap(10); 
     	
-    	//this.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));        
+    	this.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));        
     	this.setLayout(layout);   
     	
     
