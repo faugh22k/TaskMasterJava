@@ -140,6 +140,6 @@ public class EditScreen{
 		return tempDate;
 	}
 	
-	public JPanel getJFrame(){ return screenPanel;}
+	public JPanel getJPanel(){ return screenPanel;}
 	
 }

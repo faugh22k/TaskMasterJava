@@ -126,14 +126,15 @@ public class TaskMaster {
 	        public void actionPerformed(ActionEvent e) 
 	        {       
 	        	EditScreen ed = new EditScreen();
-	        	frame.getContentPane().add(BorderLayout.CENTER,ed.getJFrame());
+	        	frame.getContentPane().add(BorderLayout.CENTER,ed.getJPanel());
 	        }
 	    });
 		delete.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
-	        //delete a selected task	 	
+	        //delete a selected task	 
+	        	
 	        }
 	    });
 		
