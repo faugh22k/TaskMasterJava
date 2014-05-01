@@ -11,12 +11,16 @@ import javax.swing.*;
 
 
 
-public class EditScreen extends JPanel {
+public class EditScreen extends JFrame {
 	
-	private String dateInput;
+	//temp task and features
 	private String textInput;
+	private ImportanceLevel tempImp = null;
+	private Date tempDate = null;
+	private String tempCategory = null;
+	private Task tempTask;
 	
-	private JFrame frame; 
+	private EditScreen frame; 
 	private JPanel topToolbar;
 	private JLabel category;
 	private JComboBox categories;
@@ -37,7 +41,7 @@ public class EditScreen extends JPanel {
 	
 
 	public void go(){
-		frame = new JFrame();
+		frame = new EditScreen();
 		
 		topToolbar = new JPanel();
 		topToolbar.setBackground(Color.darkGray);
@@ -88,14 +92,26 @@ public class EditScreen extends JPanel {
 	        public void actionPerformed(ActionEvent e) 
 	        {       
 	        	//extract all the info into a task
-	        	Date tempDate;
-	        	dateInput = date.getText(); //the below method is not finished, doe snot parse from string
-	        	tempDate = getInputtedDate(dateInput);
+	        	//get date
+	        	String dateInput = date.getText(); 
+	        	tempDate = getInputtedDate(dateInput);//problems w deprecated date
+	        	//get new task text
 	        	textInput = newText.getText();
-	        	//importanceLevel
+	        	//get importance level
+	        	if((String)priority.getSelectedItem()=="Low"){
+	        		tempImp = ImportanceLevel.low;
+	        	}else if((String)priority.getSelectedItem()=="Normal"){
+	        		tempImp = ImportanceLevel.normal;
+	        	}else{
+	        		tempImp = ImportanceLevel.high;
+	        	}
+      		    //get category   	
+	        	tempCategory = (String)categories.getSelectedItem();
+	        	//make task, how do we put it into taskgrid?
+	        	 //fake color passed for now, category should be passed last
+	        	tempTask = new Task(textInput, tempImp, tempDate, Color.BLUE );
 	        	
-	        	//category
-
+	        	System.out.println("A task was made with text:"+ " " + tempTask.getText());
 	        }
 	    });	
 	}
@@ -106,7 +122,7 @@ public class EditScreen extends JPanel {
 		for (int i=0; i<tokens.length;i++){
 		  dates[i] = Integer.parseInt(tokens[i]);	
 		}
-		Date tempDate = new Date(dates[2],dates[1],dates[0]); //this is deprecated, fix
+		Date tempDate = new Date(dates[2],dates[1],dates[0]); //this is deprecated, is this correct order?
 		return tempDate;
 	}
 	
