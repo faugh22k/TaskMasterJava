@@ -219,12 +219,13 @@ public class TaskGrid extends JPanel{
 
     // creates a new task to add to the grid, and the lists
     public void createNewTask(String text, ImportanceLevel level, Date due){
-        Task newTask = new Task(text, level, due, taskColor);
+        Task newTask = new Task(text, level, due);
 
         allTasks.add(newTask);
         orderedByPriority.add(newTask);
         orderedByStrictDate.add(newTask);
         orderedByRelaxedDate.add(newTask);
+         
 
         if(newTask.getImportance() == ImportanceLevel.low){
             low.add(newTask);
@@ -240,7 +241,8 @@ public class TaskGrid extends JPanel{
             inFuture.add(newTask);
         }
 
-        this.add(newTask);
+        //this.add(newTask);
+        redisplayAll();
     }
 
     // goes through the tasks, updates current and inFuture
@@ -334,22 +336,29 @@ public class TaskGrid extends JPanel{
     	String addedOrder = "";
     	//this.setLayout(new GridLayout(0,5));
     	
-    	for(Task current : currentSorting){ 
+    	/*for(Task current : currentSorting){ 
     		this.add(current);  
     		addedOrder += current.getText() + ", ";
     		//repaint();
-    	} 
+    	} */
     	
     	//this.add(currentSorting.peek());
     	 
     	//this.setLayout(new GridLayout(0,5));
     	
-    	/*Task[] tasks = new Task[currentSorting.size()];
+    	Task[] tasks = new Task[currentSorting.size()];
     	currentSorting.toArray(tasks);
     	 
-    	for (int i = 0; i < 3; i++){
+    	TaskOrderPriority checking = new TaskOrderPriority();
+    	Task last = tasks[0];
+    	System.out.println("\n****\n"); 
+    	for (int i = 0; i < 9 && i < tasks.length; i++){
     		this.add(tasks[i]);
-    	}*/
+    		
+    		System.out.println("\ncompare(last, current) = " + checking.compare(last, tasks[i]));
+    		System.out.println("last: " + last + ", current: " + tasks[i]);
+    		last = tasks[i];
+    	}
     	
     	System.out.println(addedOrder);
     	System.out.println(currentSorting.toString());

@@ -29,14 +29,26 @@ public class TaskMaster {
 	
 	public void go(){
 		taskGrid = new TaskGrid();
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.normal, new Date(2014, 5, 3));
-		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.high, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Third ", ImportanceLevel.low, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Fourth ", ImportanceLevel.high, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Sixth ", ImportanceLevel.low, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Seventh !", ImportanceLevel.normal, new Date(2014, 5, 4));
-		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(2014, 5, 4));
+		/*taskGrid.createNewTask("Hello world!", ImportanceLevel.low, new Date(2014, 5, 12));
+		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, new Date(2014, 5, 11));
+		taskGrid.createNewTask("Third ", ImportanceLevel.high, new Date(2014, 5, 10));
+		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, new Date(2014, 5, 9));
+		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(2014, 5, 8));
+		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, new Date(2014, 5, 7));
+		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, new Date(2014, 5, 6));
+		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(2014, 5, 5));
+		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, new Date(2014, 5, 4));*/
+		
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, new Date(14, 1, 3));
+		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, new Date(14, 1, 3));
+		taskGrid.createNewTask("Third ", ImportanceLevel.high, new Date(14, 1, 3));
+		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, new Date(14, 1, 3));
+		/*taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(14, 1, 3));
+		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, new Date(14, 1, 3));
+		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, new Date(14, 1, 3));
+		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(14, 1, 3)); 
+		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, new Date(14, 1, 3));*/
+		 
 		
 		
 		JFrame frame = new JFrame();

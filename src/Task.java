@@ -35,7 +35,7 @@ public class Task extends JPanel{
     private Color low;
 
 
-    public Task(String text, ImportanceLevel importance, Date due, Color color){ 
+    public Task(String text, ImportanceLevel importance, Date due){ 
         this.text = new TaskText(text); 
         
          
@@ -61,9 +61,8 @@ public class Task extends JPanel{
         //this.add(textArea, BorderLayout.CENTER);
         this.add(this.text, BorderLayout.CENTER);
         this.add(controls, BorderLayout.SOUTH);
-        
-        background = color;
-        normal = color;
+         
+        normal = new Color(191, 227, 74); 
         high = new Color(255, 255, 160);
         low = new Color(99, 195, 210);
         
@@ -86,12 +85,12 @@ public class Task extends JPanel{
         // darker version: 5F8100  (79, 129, 0)
     }
 
-    public Task(String text, ImportanceLevel importance, Color color){
-        this(text, importance, null, color);
+    public Task(String text, ImportanceLevel importance){
+        this(text, importance, null);
     }
 
-    public Task(String text, Color color){
-        this(text, ImportanceLevel.normal, color);
+    public Task(String text){
+        this(text, ImportanceLevel.normal);
     }
 
     public ImportanceLevel getImportance(){
