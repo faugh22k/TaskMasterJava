@@ -64,7 +64,7 @@ public class TaskGrid extends JPanel{
     	
     	this.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));        
     	this.setLayout(layout);   
-    	
+    	this.setFocusable(true);
     
         allTasks = new LinkedList<Task>();
         low = new LinkedList<Task>();
@@ -164,7 +164,11 @@ public class TaskGrid extends JPanel{
 
     // deletes the task
     public void removeTask(Task task, boolean updateDisplay){
-        allTasks.remove(task);
+        if(task == null){
+        	return;
+        }
+    	
+    	allTasks.remove(task);
         current.remove(task);
         inFuture.remove(task);
         low.remove(task);

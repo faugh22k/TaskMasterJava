@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JComponent.*;
@@ -33,8 +34,12 @@ public class TaskMaster {
 	
 	JPanel editScreen;
 	
+	ArrayList<Task> selected;
+	
 	private String[] catS= {"Personal","Work","Other","All Tasks"};
-	public TaskMaster(){ }
+	public TaskMaster(){
+		selected = new ArrayList<Task>();
+	}
 	
 	public void go(){
 		taskGrid = new TaskGrid(this);
@@ -102,9 +107,9 @@ public class TaskMaster {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,500);
 		frame.setVisible(true);
-		
-		frame.setLocationRelativeTo(null);
-					
+		frame.setFocusable(true); 
+		frame.setLocationRelativeTo(null); 
+					 
 	}
 	
 	public void initListeners(){
@@ -147,16 +152,22 @@ public class TaskMaster {
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
-	        //edit selected task	 
-	        	
+	        //edit selected task	
+	        	if(selected.size() > 0){
+	        		openEditScreen(selected.get(selected.size()-1));
+	        	}
 	        }
 	    });
 		delete.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
-	        //delete a selected task	 
-	        	
+	        //delete a selected task
+	        	for(int i = 0; i < selected.size(); i++){
+	        		Task current = selected.get(i);
+	        		taskGrid.removeTask(current, i == selected.size()-1);
+	        	}
+	        	//frame.repaint();
 	        }
 	    });
 		categories.addActionListener(new ActionListener()
@@ -201,6 +212,12 @@ public class TaskMaster {
 	}
 	
 	public void closeEditScreen(boolean saved, Task original, Task newTask){
+		if(original != null){
+			System.out.println("deselecting the task that was selected");
+			selected.remove(original);
+			original.changeSelection();
+		}
+		
 		if(!saved){
 			switchEditToGrid();
 			return;
@@ -224,6 +241,14 @@ public class TaskMaster {
 		frame.getContentPane().add(BorderLayout.CENTER, taskGrid);
 		frame.validate();
 		frame.repaint();
+	}
+	
+	public void addSelection(Task selected){
+		this.selected.add(selected);
+	}
+	
+	public void removeSelection(Task remove){
+		selected.remove(remove);
 	}
 	
 	public static void main(String[] args){

@@ -89,7 +89,10 @@ public class EditScreen{
 		newText.setLineWrap(true);
 		newText.setWrapStyleWord(true);
 		newText.setVisible(true);
-		//textPanel.add(BorderLayout.CENTER, newText);
+		if(editingTask != null){
+			newText.setText(editingTask.getText());
+		}
+		textPanel.add(BorderLayout.CENTER, newText);
 		
 		textPanel.setVisible(true);
 		
@@ -113,8 +116,8 @@ public class EditScreen{
 	
 		//set layout and size of frame
 		screenPanel.add(topToolbar,BorderLayout.NORTH);
-		//screenPanel.add(textPanel, BorderLayout.CENTER); 
-		screenPanel.add(newText, BorderLayout.CENTER); 
+		screenPanel.add(textPanel, BorderLayout.CENTER); 
+		//screenPanel.add(newText, BorderLayout.CENTER); 
 		screenPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		//frame.getContentPane().add(BorderLayout.NORTH,topToolbar);
@@ -130,7 +133,7 @@ public class EditScreen{
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
-	        	taskMaster.closeEditScreen(false, null, null);
+	        	taskMaster.closeEditScreen(false, editingTask, null);
 	        }
 	    });
 		save.addActionListener(new ActionListener() 
