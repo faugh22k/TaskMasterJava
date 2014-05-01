@@ -1,6 +1,7 @@
 package taskMaster;
 
 import javax.swing.*;
+
 import java.awt.event.*;
 import java.awt.*;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class TaskMaster {
 	JLabel manage;
 	JButton create;
 	JButton delete;
+	JButton edit;
 	 
 	JPanel tasksPanel;
 	 
@@ -31,6 +33,7 @@ public class TaskMaster {
 	
 	JPanel editScreen;
 	
+	private String[] catS= {"Personal","Work","Other","All Tasks"};
 	public TaskMaster(){ }
 	
 	public void go(){
@@ -69,11 +72,13 @@ public class TaskMaster {
 		dueDate = new JButton("Due Date");
 		priority = new JButton("Priority");
 		category = new JLabel("Category");
-		categories = new JComboBox(); //currently empty
+		categories = new JComboBox(catS); //currently empty
 		
 		manage = new JLabel("Manage Tasks");
 		create = new JButton("Create");
+		edit = new JButton("Edit");
 		delete = new JButton("Delete");
+		
 		
 		toolbar.add(sortBy);
 		toolbar.add(defaultS);
@@ -83,10 +88,11 @@ public class TaskMaster {
 		toolbar.add(categories);
 		toolbar.add(manage);
 		toolbar.add(create);
+		toolbar.add(edit);
 		toolbar.add(delete);
 		
 		
-		initButtons();
+		initListeners();
 		//set layout and size of frame
 
 		frame.getContentPane().add(BorderLayout.WEST,toolbar);
@@ -99,7 +105,7 @@ public class TaskMaster {
 					
 	}
 	
-	public void initButtons(){
+	public void initListeners(){
 		defaultS.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
@@ -134,6 +140,15 @@ public class TaskMaster {
 	        	openEditScreen(null);
 	        }
 	    });
+
+		edit.addActionListener(new ActionListener() 
+	    {           	
+	        public void actionPerformed(ActionEvent e) 
+	        {       
+	        //edit selected task	 
+	        	
+	        }
+	    });
 		delete.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
@@ -142,7 +157,22 @@ public class TaskMaster {
 	        	
 	        }
 	    });
-		
+		categories.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e){
+				/*int selected = categories.getSelectedIndex();
+				if(selected == 0){//personal
+					taskGrid.setDisplayState(catS[0]); 
+				} else if (selected == 1){//work
+				    taskGrid.setDisplayState(catS[1]); 
+				} else if(selected == 1){//other
+					taskGrid.setDisplayState(catS[2]); 
+				}else{
+					taskGrid.setDisplayState(catS[3]); 
+				}*/
+			
+			}
+		});
 		
 		
 	}
