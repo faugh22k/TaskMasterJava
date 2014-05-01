@@ -15,7 +15,7 @@ public class EditScreen extends JPanel{
 	
 	private JPanel topToolbar;
 	private JLabel category;
-	private JComboBox<String> categories;
+	private JComboBox categories;
 	private JTextField date;
 	
 	
@@ -24,7 +24,7 @@ public class EditScreen extends JPanel{
 	private JTextArea newText;
 	
 	private JPanel bottomPanel;
-	private JComboBox<String> priority;
+	private JComboBox priority;
 	private JButton cancel;
 	private JButton save;
 	
@@ -57,7 +57,7 @@ public class EditScreen extends JPanel{
 		topToolbar.setOpaque(false);
 		topToolbar.setLayout(new BoxLayout(topToolbar, BoxLayout.X_AXIS));
 		category = new JLabel("Choose type:");
-		categories = new JComboBox<String>(catS);
+		categories = new JComboBox(catS);
 		date = new JTextField(10);
 		topToolbar.add(category);
 		topToolbar.add(categories);
@@ -83,7 +83,7 @@ public class EditScreen extends JPanel{
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5,5,2,0)); 
 		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-		priority = new JComboBox<String>(priorityS); 
+		priority = new JComboBox(priorityS); 
 		cancel = new JButton("Cancel");
 		save = new JButton("Save");
 		bottomPanel.add(new JLabel("Choose Priority:"));
