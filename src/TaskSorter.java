@@ -19,7 +19,7 @@ public class TaskSorter implements Iterable<Task> {
 	}
 	
 	public void add(Task toAdd){
-		System.out.println("in add task ***********************");
+		//System.out.println("in add task ***********************");
 		/*if(size == 0){
 			list.addFirst(toAdd);
 			size++;
@@ -51,7 +51,7 @@ public class TaskSorter implements Iterable<Task> {
 		
 		Task current;
 		for(int i = 0; i < array.size(); i++){
-			System.out.println("looking to place new task");
+			//System.out.println("looking to place new task");
 			current = array.get(i);
 			if(compare.compare(toAdd, current) == -1){
 				array.add(i, toAdd);

@@ -108,6 +108,10 @@ public class Task extends JPanel{
     public Date getDue(){
         return info.getDue();
     }
+    
+    public String getFormattedDueDate(){
+    	return info.getFormattedDate();
+    }
 
     public Color getColor(){
         return info.getColor();

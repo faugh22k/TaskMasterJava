@@ -109,6 +109,12 @@ public class TaskInfo extends JPanel{
 
     public void setDue(Date date){
         due = date;
+        displayDueDate.setText(getFormattedDate());
+        
+    }
+    
+    public String getFormattedDate(){
+    	return formatDate.format(due);
     }
 
     public Date getEdited(){
