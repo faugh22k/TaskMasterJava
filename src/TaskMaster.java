@@ -212,18 +212,22 @@ public class TaskMaster {
 	}
 	
 	public void closeEditScreen(boolean saved, Task original, Task newTask){
-		if(original != null){
-			System.out.println("deselecting the task that was selected");
-			selected.remove(original);
-			original.changeSelection();
-		}
+		
 		
 		if(!saved){
 			switchEditToGrid();
+			
+			if(original != null){
+				System.out.println("deselecting the task that was selected");
+				selected.remove(original);
+				original.changeSelection();
+			}
+			
 			return;
 		}
 		
 		if(original != null){
+			System.out.println("updating the task!");
 			taskGrid.upDateTask(original, newTask);
 		} else {
 			taskGrid.addNewTask(newTask);

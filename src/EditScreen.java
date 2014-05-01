@@ -168,9 +168,11 @@ public class EditScreen extends JPanel{
 		if(editingTask != null){
 			newText.setText(editingTask.getText());
 			priority.setSelectedIndex(editingTask.getImportance().ordinal()); 
+			date.setText(editingTask.getFormattedDueDate());
 		} else {
 			priority.setSelectedIndex(1);
 			newText.setText("Please input text here.");
+			date.setText("mm/dd");
 		}
 	}
 	public void initBackground(){
