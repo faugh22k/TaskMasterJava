@@ -13,7 +13,7 @@ import javax.swing.*;
 
 public class EditScreen{
 	
-	private JFrame frame;
+	private JPanel screenPanel;
 	private JPanel topToolbar;
 	private JLabel category;
 	private JComboBox categories;
@@ -44,7 +44,9 @@ public class EditScreen{
 		initButtons();
 	}
 	public void go(){
-		frame = new JFrame();
+		screenPanel = new JPanel();
+		screenPanel.setLayout(new BorderLayout(500,500));
+		
 		topToolbar = new JPanel();
 		topToolbar.setBackground(Color.darkGray);
 		topToolbar.setLayout(new BoxLayout(topToolbar, BoxLayout.X_AXIS));
@@ -74,13 +76,16 @@ public class EditScreen{
 		
 	
 		//set layout and size of frame
-
-		frame.getContentPane().add(BorderLayout.NORTH,topToolbar);
-		frame.getContentPane().add(BorderLayout.CENTER,textPanel);
-		frame.getContentPane().add(BorderLayout.SOUTH,bottomPanel);
+		screenPanel.add(topToolbar,BorderLayout.NORTH);
+		screenPanel.add(textPanel, BorderLayout.CENTER);
+		screenPanel.add(bottomPanel, BorderLayout.SOUTH);
+		
+		//frame.getContentPane().add(BorderLayout.NORTH,topToolbar);
+		//frame.getContentPane().add(BorderLayout.CENTER,textPanel);
+		//frame.getContentPane().add(BorderLayout.SOUTH,bottomPanel);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500,500);
-		frame.setVisible(true);
+		//frame.setSize(500,500);
+		screenPanel.setVisible(true);
 					
 	}
 	
@@ -90,8 +95,8 @@ public class EditScreen{
 	        public void actionPerformed(ActionEvent e) 
 	        {       
 	        	//throw away the task being made
-	        	frame.setVisible(false); 
-	        	frame.dispose();
+	        	screenPanel.setVisible(false); 
+	        	screenPanel = null;
 	        }
 	    });
 		save.addActionListener(new ActionListener() 
@@ -119,6 +124,8 @@ public class EditScreen{
 	        	tempTask = new Task(textInput, tempImp, tempDate);
 	        	
 	        	System.out.println("A task was made with text:"+ " " + tempTask.getText());
+	        	//frame.dispose();
+	        	//do i need to make this whole class null after?
 	        }
 	    });	
 	}
@@ -133,6 +140,6 @@ public class EditScreen{
 		return tempDate;
 	}
 	
-	public JFrame getJFrame(){ return frame;}
+	public JPanel getJFrame(){ return screenPanel;}
 	
 }
