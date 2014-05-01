@@ -55,7 +55,7 @@ public class EditScreen{
 		}
 		
 		go();
-		initButtons();
+		initListeners();
 	}
 	public void go(){
 		screenPanel = new JPanel();
@@ -85,15 +85,21 @@ public class EditScreen{
 		newText.setOpaque(false);
 		newText.setLineWrap(true);
 		newText.setWrapStyleWord(true);
-		textPanel.add(BorderLayout.CENTER, newText);
 		newText.setVisible(true);
+		textPanel.add(BorderLayout.CENTER, newText);
+		
 		textPanel.setVisible(true);
 		
 		bottomPanel = new JPanel();
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5,5,2,0)); 
 		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-		priority = new JComboBox(priorityS);
+		priority = new JComboBox(priorityS); 
+		if(editingTask == null){
+			priority.setSelectedIndex(1);
+		} else {
+			priority.setSelectedIndex(editingTask.getImportance().ordinal()); 
+		}
 		cancel = new JButton("Cancel");
 		save = new JButton("Save");
 		bottomPanel.add(new JLabel("Choose Priority:"));
@@ -114,9 +120,8 @@ public class EditScreen{
 		//frame.setSize(500,500);
 		screenPanel.setVisible(true);
 		
-	}
-	
-	private void initButtons(){
+	} 
+	private void initListeners(){
 		cancel.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
@@ -155,7 +160,27 @@ public class EditScreen{
 	        	taskMaster.closeEditScreen(true, editingTask, tempTask);
 	        }
 	    });	
+		
+		priority.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e){
+				int selected = priority.getSelectedIndex();
+				if(selected == 0){
+					background = Task.low;
+				} else if (selected == 1){
+					background = Task.normal;
+				} else {
+					background = Task.high;
+				}
+				resetBackground();
+			}
+		});
 	}
+	
+	public void resetBackground(){
+		screenPanel.setBackground(background);
+	}
+	
 	private Date getInputtedDate(String s){
 		if(s.equals("")){
 			return null;
