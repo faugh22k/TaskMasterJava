@@ -26,6 +26,13 @@ public class TaskOrderRelaxedDueDate implements  TaskOrderer{
             }
         }
 
+        if(one.getDue() == null){
+        	return 1;
+        }
+        if(two.getDue() == null){
+        	return -1;
+        }
+        
         // if the two tasks are not in the same general time range, or are in the same
         // general time range but with equal importance, order by due date
         if(one.getDue().before(two.getDue())){

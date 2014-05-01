@@ -15,6 +15,13 @@ public class TaskOrderStrictDueDate implements TaskOrderer{
     	System.out.println("one.text = " + one.getText());
     	System.out.println("two.text = " + two.getText());
     	
+    	if(one.getDue() == null){
+        	return 1;
+        }
+        if(two.getDue() == null){
+        	return -1;
+        }
+    	
         // the task with earlier due date comes first
         if(one.getDue().before(two.getDue())){
         	System.out.println("one is due before two\n");

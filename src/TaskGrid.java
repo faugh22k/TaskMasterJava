@@ -160,7 +160,7 @@ public class TaskGrid extends JPanel{
     }
 
     // deletes the task
-    public void removeTask(Task task){
+    public void removeTask(Task task, boolean updateDisplay){
         allTasks.remove(task);
         current.remove(task);
         inFuture.remove(task);
@@ -172,6 +172,12 @@ public class TaskGrid extends JPanel{
         orderedByRelaxedDate.remove(task);
         
         this.remove(task);
+        
+        if(updateDisplay){
+        	//repaint();
+        	//validate();
+        	redisplayAll();
+        }
     }
 
     // for debugging: checks to see if any tasks are in the wrong place
@@ -222,7 +228,20 @@ public class TaskGrid extends JPanel{
     public void createNewTask(String text, ImportanceLevel level, Date due){
         Task newTask = new Task(text, level, due);
 
-        allTasks.add(newTask);
+        	finishTaskCreateOrSwap(newTask);
+    }
+    
+    public void addNewTask(Task newTask){
+    	finishTaskCreateOrSwap(newTask);
+    }
+    
+    public void upDateTask(Task original, Task newTask){
+    	removeTask(original, false);
+    	finishTaskCreateOrSwap(newTask); 
+    }
+    
+    private void finishTaskCreateOrSwap(Task newTask){
+    	allTasks.add(newTask);
         orderedByPriority.add(newTask);
         orderedByStrictDate.add(newTask);
         orderedByRelaxedDate.add(newTask);

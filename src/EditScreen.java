@@ -36,10 +36,16 @@ public class EditScreen{
 	private String tempCategory = null;
 	private Task tempTask;
 	
+	private TaskMaster taskMaster;
+	
 	private String[] catS= {"Personal","Work","Other"};
 	private String[] priorityS = {"Low","Normal","High"};
 	
-	EditScreen(){
+	private Task editingTask; 
+	
+	EditScreen(TaskMaster taskMaster, Task toEdit){
+		this.taskMaster = taskMaster;
+		editingTask = toEdit;
 		go();
 		initButtons();
 	}
@@ -126,10 +132,16 @@ public class EditScreen{
 	        	System.out.println("A task was made with text:"+ " " + tempTask.getText());
 	        	//frame.dispose();
 	        	//do i need to make this whole class null after?
+	        	
+	        	taskMaster.closeEditScreen(true, editingTask, tempTask);
 	        }
 	    });	
 	}
 	private Date getInputtedDate(String s){
+		if(s.equals("")){
+			return null;
+		}
+		
 		String d = s;
 		String[] tokens = d.split("/");
 		int[] dates= new int[tokens.length];

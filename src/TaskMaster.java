@@ -25,8 +25,17 @@ public class TaskMaster {
 	 
 	JPanel tasksPanel;
 	
+	TaskMaster me;
+	
 	TaskGrid taskGrid;
 	JFrame frame;
+	
+	JPanel editScreen;
+	
+	public TaskMaster(){
+		me = this;
+	}
+	
 	public void go(){
 		taskGrid = new TaskGrid();
 		/*taskGrid.createNewTask("Hello world!", ImportanceLevel.low, new Date(2014, 5, 12));
@@ -125,9 +134,10 @@ public class TaskMaster {
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {       
-	        	EditScreen ed = new EditScreen();
+	        	EditScreen ed = new EditScreen(me, null);
+	        	editScreen = ed.getJPanel();
 	        	frame.remove(taskGrid);
-	        	frame.getContentPane().add(BorderLayout.CENTER,ed.getJPanel());
+	        	frame.getContentPane().add(BorderLayout.CENTER,editScreen);
 	        	frame.repaint();
 	        	frame.validate();
 	        }
@@ -145,7 +155,32 @@ public class TaskMaster {
 		
 	}
 	
-
+	public void closeEditScreen(boolean saved, Task original, Task newTask){
+		if(!saved){
+			switchEditToGrid();
+			return;
+		}
+		
+		if(original != null){
+			taskGrid.upDateTask(original, newTask);
+		} else {
+			taskGrid.addNewTask(newTask);
+		}
+		
+		switchEditToGrid();
+	}
+	
+	private void switchEditToGrid(){
+		if(editScreen != null){
+			frame.remove(editScreen);
+			editScreen = null;
+		}
+		
+		frame.getContentPane().add(BorderLayout.CENTER, taskGrid);
+		frame.validate();
+		frame.repaint();
+	}
+	
 	public static void main(String[] args){
 		TaskMaster taskMaster = new TaskMaster();
 		taskMaster.go();

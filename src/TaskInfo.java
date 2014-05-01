@@ -114,6 +114,9 @@ public class TaskInfo extends JPanel{
     }
     
     public String getFormattedDate(){
+    	if(due == null){
+    		return "";
+    	}
     	return formatDate.format(due);
     }
 
