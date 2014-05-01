@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -59,6 +60,7 @@ public class TaskGrid extends JPanel{
     	layout.setHgap(10);
     	layout.setVgap(10); 
     	
+    	//this.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));        
     	this.setLayout(layout);   
     	
     

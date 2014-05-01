@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.util.Comparator;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -21,7 +22,7 @@ public class Task extends JPanel{
     // the text stored in this task
     private TaskText text;
     
-    private JTextArea textArea;
+    //private JTextArea textArea;
 
     // the data: priority, dates, color
     private TaskInfo info;
@@ -35,7 +36,10 @@ public class Task extends JPanel{
 
 
     public Task(String text, ImportanceLevel importance, Date due, Color color){ 
-        this.text = new TaskText(text);
+        this.text = new TaskText(text); 
+        
+         
+        
         // TODO probably want more detailed constructor call
         info = new TaskInfo(importance, due);
 
@@ -43,10 +47,10 @@ public class Task extends JPanel{
         controls = new TaskControls();
          
         
-        textArea = new JTextArea(text);
+        /*textArea = new JTextArea(text);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setOpaque(false);
+        textArea.setOpaque(false);*/
         
         JLabel testing = new JLabel("date area"); 
         //this.add(testing, BorderLayout.NORTH); 
@@ -54,7 +58,8 @@ public class Task extends JPanel{
         this.setLayout(new BorderLayout());
         
         this.add(info, BorderLayout.NORTH); 
-        this.add(textArea, BorderLayout.CENTER);
+        //this.add(textArea, BorderLayout.CENTER);
+        this.add(this.text, BorderLayout.CENTER);
         this.add(controls, BorderLayout.SOUTH);
         
         background = color;
@@ -138,17 +143,19 @@ public class Task extends JPanel{
     }
 
     public String getText() { 
-    	//return text.getText();
-    	return textArea.getText();
+    	return text.getText();
+    	//return textArea.getText();
     } 
     
     public void setText(String text){
-    	textArea.setText(text);  
+    	//textArea.setText(text);  
+    	this.text.setText(text);
     }
  
     
     public String toString(){
-    	return textArea.getText();
+    	//return textArea.getText();
+    	return text.getText();
     }
 }
 
