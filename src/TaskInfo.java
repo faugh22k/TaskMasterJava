@@ -6,7 +6,9 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 import javax.swing.JComponent; 
@@ -71,19 +73,29 @@ public class TaskInfo extends JPanel{
 
     public boolean determineIsCurrent(Date now){ 
     	
-    	int[] current = getMonthDay(now);
+    	Calendar calendar = GregorianCalendar.getInstance();
+    	int month = calendar.get(Calendar.MONTH) + 1; // starts at 0 with January
+    	int day = calendar.get(Calendar.DATE); // day of the month
+    	
+    	//int[] current = getMonthDay(now);
     	int[] dueBy = getMonthDay(due);
-    	System.out.println("\n\n                      !!!!!!!!!!!!!!!Determining is Current!!!!!!!!!!!!");
+    	System.out.println("\n\nDetermining is Current!!! ");
+    	
+    	System.out.println("date = " + getFormattedDate()); 
+    	
+    	System.out.println("priority = " + importance.toString());  
+    	
     	boolean updated = false;
-    	boolean tmp = false;
-    	if(current[0] == dueBy[0] && (current[1] >= dueBy[1] && current[1] <= dueBy[1] + 2 )){
+    	boolean tmp = false; 
+    	
+    	if(month == dueBy[0] && (day >= dueBy[1] - 2 && day <= (dueBy[1]))){ 
     		System.out.println("I am a current task!");
     		tmp = true;
     	} else {
     		System.out.println("I am a future task!");
     	}
         
-    	System.out.println("now: " + current[0] + "/" + current[1]);
+    	System.out.println("now: " + month + "/" + day);
     	System.out.println("due: " + dueBy[0] + "/" + dueBy[1]);
     	
     	if (isCurrent != tmp){
@@ -91,7 +103,7 @@ public class TaskInfo extends JPanel{
     	}
     	
         isCurrent = tmp;
-        System.out.println("               !!!!!!!!!!!!!!!Returning from Determining is Current!!!!!!!!!!!!\n\n");
+        System.out.println("Returning from Determining is Current!!!  \n\n");
         return updated;
     }
     
@@ -99,11 +111,22 @@ public class TaskInfo extends JPanel{
     	int[] data = new int[2];
     	
     	String format = formatDate.format(date);
+    	System.out.println("formatted date: " + format);
+    	
+    	int tmpDay = date.getDate();
+    	int tmpMonth = date.getMonth();
     	
     	String[] extracted = format.split("/"); 
     	try {
+    		/*if(extracted[0].charAt(0) == '0'){
+    			extracted[0] = extracted[0].substring(1, 2);
+    		} 
+    		if(extracted[1].charAt(0) == '0'){
+    			extracted[1] = extracted[1].substring(1, 2);
+    		}*/
+    		
     		int month = Integer.parseInt(extracted[0]);
-    		int day = Integer.parseInt(extracted[0]);
+    		int day = Integer.parseInt(extracted[1]);
     		data[0] = month;
     		data[1] = day;
     	} catch (NumberFormatException e){
