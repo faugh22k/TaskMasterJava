@@ -155,7 +155,8 @@ public class Task extends JPanel{
     
     public String toString(){
     	//return textArea.getText();
-    	return text.getText();
+    	//return text.getText();
+    	return info.getImportance().toString();
     }
 }
 
