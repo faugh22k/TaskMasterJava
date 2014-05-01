@@ -126,7 +126,10 @@ public class TaskMaster {
 	        public void actionPerformed(ActionEvent e) 
 	        {       
 	        	EditScreen ed = new EditScreen();
+	        	frame.remove(taskGrid);
 	        	frame.getContentPane().add(BorderLayout.CENTER,ed.getJPanel());
+	        	frame.repaint();
+	        	frame.validate();
 	        }
 	    });
 		delete.addActionListener(new ActionListener() 
