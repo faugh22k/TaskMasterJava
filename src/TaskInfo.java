@@ -77,7 +77,7 @@ public class TaskInfo extends JPanel{
     	int month = calendar.get(Calendar.MONTH) + 1; // starts at 0 with January
     	int day = calendar.get(Calendar.DATE); // day of the month
     	
-    	//int[] current = getMonthDay(now);
+    	//int[] current = getMonthDay(now); 
     	int[] dueBy = getMonthDay(due);
     	System.out.println("\n\nDetermining is Current!!! ");
     	
