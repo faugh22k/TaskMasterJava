@@ -47,9 +47,9 @@ public class EditScreen extends JPanel{
 	EditScreen(TaskMaster taskMaster, Task toEdit){
 		this.taskMaster = taskMaster;
 		editingTask = toEdit;
-		textAreaShading = new Color(10, 20, 20, 20);
+		textAreaShading = new Color(5, 250, 250, 250); // was 10,20,20,20 // was 10, 200, 200, 200
 		initBackground();
-		this.setLayout(new BorderLayout(500,500));
+		this.setLayout(new BorderLayout());
 		this.setBackground(background); //this might not be initializedset
 		
 		topToolbar = new JPanel();
@@ -67,13 +67,13 @@ public class EditScreen extends JPanel{
 		
 		textPanel = new JPanel();
 		//textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));  
-		textPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));   
+		textPanel.setBorder(BorderFactory.createEmptyBorder(5,15,5,15));   
 		textPanel.setLayout(new BorderLayout());  
-		//textPanel.setOpaque(false);
-		textPanel.setBackground(Color.CYAN);
+		textPanel.setOpaque(false);
+		//textPanel.setBackground(Color.CYAN);
 		newText = new JTextArea();
-		newText.setOpaque(true);
-		newText.setBackground(textAreaShading);
+		//newText.setOpaque(false);
+		//newText.setBackground(textAreaShading); //** nice shading
 		newText.setLineWrap(true);
 		newText.setWrapStyleWord(true); 
 		textPanel.add(BorderLayout.CENTER, newText);
