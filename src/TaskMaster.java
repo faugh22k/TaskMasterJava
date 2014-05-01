@@ -26,7 +26,7 @@ public class TaskMaster {
 	JPanel tasksPanel;
 	
 	TaskGrid taskGrid;
-	
+	JFrame frame;
 	public void go(){
 		taskGrid = new TaskGrid();
 		/*taskGrid.createNewTask("Hello world!", ImportanceLevel.low, new Date(2014, 5, 12));
@@ -51,7 +51,7 @@ public class TaskMaster {
 		 
 		
 		
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		
 		toolbar = new JPanel();
 		toolbar.setBackground(Color.darkGray);
@@ -119,6 +119,21 @@ public class TaskMaster {
 	        	System.out.println("priority sort");
 	            //still need to flush current task display
 	        	taskGrid.changeSort(SortState.priority);
+	        }
+	    });
+		create.addActionListener(new ActionListener() 
+	    {           	
+	        public void actionPerformed(ActionEvent e) 
+	        {       
+	        	EditScreen ed = new EditScreen();
+	        	frame.getContentPane().add(BorderLayout.CENTER,ed);
+	        }
+	    });
+		delete.addActionListener(new ActionListener() 
+	    {           	
+	        public void actionPerformed(ActionEvent e) 
+	        {       
+	        //delete a selected task	 	
 	        }
 	    });
 		
