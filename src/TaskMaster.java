@@ -24,17 +24,14 @@ public class TaskMaster {
 	JButton delete;
 	 
 	JPanel tasksPanel;
-	
-	TaskMaster me;
+	 
 	
 	TaskGrid taskGrid;
 	JFrame frame;
 	
 	JPanel editScreen;
 	
-	public TaskMaster(){
-		me = this;
-	}
+	public TaskMaster(){ }
 	
 	public void go(){
 		taskGrid = new TaskGrid();
@@ -133,13 +130,8 @@ public class TaskMaster {
 		create.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
-	        {       
-	        	EditScreen ed = new EditScreen(me, null);
-	        	editScreen = ed.getJPanel();
-	        	frame.remove(taskGrid);
-	        	frame.getContentPane().add(BorderLayout.CENTER,editScreen);
-	        	frame.repaint();
-	        	frame.validate();
+	        {        
+	        	openEditScreen(null);
 	        }
 	    });
 		delete.addActionListener(new ActionListener() 
@@ -153,6 +145,15 @@ public class TaskMaster {
 		
 		
 		
+	}
+	
+	public void openEditScreen(Task toEdit){
+		EditScreen ed = new EditScreen(this, toEdit);
+    	editScreen = ed.getJPanel();
+    	frame.remove(taskGrid);
+    	frame.getContentPane().add(BorderLayout.CENTER,editScreen);
+    	frame.repaint();
+    	frame.validate();
 	}
 	
 	public void closeEditScreen(boolean saved, Task original, Task newTask){
