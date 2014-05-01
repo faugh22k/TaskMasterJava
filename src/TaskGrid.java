@@ -2,6 +2,7 @@ package taskMaster;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -36,15 +37,15 @@ public class TaskGrid extends JPanel{
     // these hold the order of the tasks according to different priorities
 
     // order: high priority current, then normal current, low current, then high future, normal future, low future.
-    private PriorityQueue<Task> orderedByRelaxedDate;
+    private TaskSorter orderedByRelaxedDate;
 
     // order: purely by due date
-    private PriorityQueue<Task> orderedByStrictDate;
+    private TaskSorter orderedByStrictDate;
 
     // order: high, normal, low (within individual categories, by due date)
-    private PriorityQueue<Task> orderedByPriority;
+    private TaskSorter orderedByPriority;
 
-    private PriorityQueue<Task> currentSorting;
+    private TaskSorter currentSorting;
 
     private DisplayState displayState;
     private SortState sortState; 
@@ -72,9 +73,9 @@ public class TaskGrid extends JPanel{
         inFuture = new LinkedList<Task>();
 
 
-        orderedByStrictDate = new PriorityQueue<Task>(10, new TaskOrderRelaxedDueDate());
-        orderedByRelaxedDate = new PriorityQueue<Task>(10, new TaskOrderStrictDueDate());
-        orderedByPriority = new PriorityQueue<Task>(10, new TaskOrderPriority());
+        orderedByStrictDate = new TaskSorter(new TaskOrderRelaxedDueDate());
+        orderedByRelaxedDate = new TaskSorter(new TaskOrderStrictDueDate());
+        orderedByPriority = new TaskSorter(new TaskOrderPriority()); 
 
         currentSorting = orderedByRelaxedDate;
 
@@ -335,22 +336,36 @@ public class TaskGrid extends JPanel{
     	//repaint();
     	String addedOrder = "";
     	//this.setLayout(new GridLayout(0,5));
-    	
-    	/*for(Task current : currentSorting){ 
+    	 
+    	for(Task current : currentSorting){  
     		this.add(current);  
     		addedOrder += current.getText() + ", ";
     		//repaint();
-    	} */
+    	}   
+    	
+    	/*LinkedList<Task> list = currentSorting.getList();
+    	System.out.println("list = " + list);
+    	Task current = list.getFirst();
+		for(int i = 0; i < list.size(); i++){ 
+			System.out.println("current = " + current);
+			if(current == null){
+				continue;
+			}
+			current = list.get(i);
+    		this.add(current);  
+    		addedOrder += current.getText() + ", ";
+    	}*/
     	
     	//this.add(currentSorting.peek());
     	 
     	//this.setLayout(new GridLayout(0,5));
     	
-    	Task[] tasks = new Task[currentSorting.size()];
+    	/*Task[] tasks = new Task[currentSorting.size()];
     	currentSorting.toArray(tasks);
     	 
     	TaskOrderPriority checking = new TaskOrderPriority();
     	Task last = tasks[0];
+    	
     	System.out.println("\n****\n"); 
     	for (int i = 0; i < 9 && i < tasks.length; i++){
     		this.add(tasks[i]);
@@ -358,7 +373,7 @@ public class TaskGrid extends JPanel{
     		System.out.println("\ncompare(last, current) = " + checking.compare(last, tasks[i]));
     		System.out.println("last: " + last + ", current: " + tasks[i]);
     		last = tasks[i];
-    	}
+    	}*/
     	
     	System.out.println(addedOrder);
     	System.out.println(currentSorting.toString());
