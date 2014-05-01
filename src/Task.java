@@ -3,6 +3,8 @@ package taskMaster;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -14,7 +16,7 @@ import javax.swing.JTextArea;
 /**
  * Encompasses Task data, logic, and display
  */
-public class Task extends JPanel{
+public class Task extends JPanel {  
 
     // the buttons area for this task
     private TaskControls controls;
@@ -33,11 +35,13 @@ public class Task extends JPanel{
     public static Color high;
     public static Color normal;
     public static Color low;
+    
+    private TaskMaster taskMaster;
 
 
-    public Task(String text, ImportanceLevel importance, Date due){ 
+    public Task(String text, ImportanceLevel importance, Date due, TaskMaster taskMaster) {  
         this.text = new TaskText(text); 
-        
+        this.taskMaster = taskMaster;
          
         
         // TODO probably want more detailed constructor call
@@ -83,14 +87,30 @@ public class Task extends JPanel{
         // rgb 191, 227, 74
         //background.setColor(0xBFE34A);
         // darker version: 5F8100  (79, 129, 0)
+        
+         this.addFocusListener(new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        	 
+         });
     }
 
-    public Task(String text, ImportanceLevel importance){
-        this(text, importance, null);
+    public Task(String text, ImportanceLevel importance, TaskMaster taskMaster){
+        this(text, importance, null, taskMaster);
     }
 
-    public Task(String text){
-        this(text, ImportanceLevel.normal);
+    public Task(String text, TaskMaster taskMaster){
+        this(text, ImportanceLevel.normal, taskMaster); 
     }
 
     public ImportanceLevel getImportance(){
@@ -161,5 +181,13 @@ public class Task extends JPanel{
     	//return text.getText();
     	return info.getImportance().toString();
     }
+    
+    public void focusLost(FocusEvent e){
+		
+	}
+	
+	public void focusGained(FocusEvent e){
+		
+	}
 }
 

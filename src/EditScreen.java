@@ -155,7 +155,7 @@ public class EditScreen{
 	        	tempCategory = (String)categories.getSelectedItem();
 	        	//make task, how do we put it into taskgrid?
 	        	 //fake color passed for now, category should be passed last
-	        	tempTask = new Task(textInput, tempImp, tempDate);
+	        	tempTask = new Task(textInput, tempImp, tempDate, taskMaster);
 	        	
 	        	System.out.println("A task was made with text:"+ " " + tempTask.getText());
 	        	//frame.dispose();

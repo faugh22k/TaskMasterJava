@@ -33,6 +33,7 @@ public class TaskGrid extends JPanel{
     private LinkedList<Task> selectedCategory;
 
     private HashSet<String> categories;
+    private TaskMaster taskMaster;
 
     // these hold the order of the tasks according to different priorities
 
@@ -53,7 +54,7 @@ public class TaskGrid extends JPanel{
     private Color background;
     private Color taskColor;
 
-    public TaskGrid(){  
+    public TaskGrid(TaskMaster taskMaster){  
         // TODO read in initial values from memory somewhere??
 
     	// infinite rows, five columns
@@ -86,6 +87,8 @@ public class TaskGrid extends JPanel{
         this.setBackground(background); 
         
         taskColor = new Color(191, 227, 74); 
+        
+        this.taskMaster = taskMaster;
 
     }
 
@@ -226,7 +229,7 @@ public class TaskGrid extends JPanel{
 
     // creates a new task to add to the grid, and the lists
     public void createNewTask(String text, ImportanceLevel level, Date due){
-        Task newTask = new Task(text, level, due);
+        Task newTask = new Task(text, level, due, taskMaster);
 
         	finishTaskCreateOrSwap(newTask);
     }
