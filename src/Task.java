@@ -30,9 +30,9 @@ public class Task extends JPanel{
     //private Paint background;
     private Color background; 
     
-    private Color high;
-    private Color normal;
-    private Color low;
+    public static Color high;
+    public static Color normal;
+    public static Color low;
 
 
     public Task(String text, ImportanceLevel importance, Date due){ 
