@@ -407,5 +407,10 @@ public class TaskGrid extends JPanel{
     	validate();
     	 
     }
+
+    public void setDisplayState(DisplayState category, String categoryName){
+    	displayState = category;
+    	// TODO finish implementing this method
+    }
 }
 

@@ -43,6 +43,7 @@ public class EditScreen{
 	
 	private Task editingTask; 
 	private Color background;
+	private Color textAreaShading;
 	
 	EditScreen(TaskMaster taskMaster, Task toEdit){
 		this.taskMaster = taskMaster;
@@ -53,6 +54,7 @@ public class EditScreen{
 		} else {
 			background = Task.normal;
 		}
+		textAreaShading = new Color(10, 20, 20, 20);
 		
 		go();
 		initListeners();
@@ -77,16 +79,17 @@ public class EditScreen{
 		
 		textPanel = new JPanel();
 		//textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));  
-		textPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));  
+		textPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));   
 		textPanel.setLayout(new BorderLayout());  
 		//textPanel.setOpaque(false);
 		textPanel.setBackground(Color.CYAN);
 		newText = new JTextArea();
-		newText.setOpaque(false);
+		newText.setOpaque(true);
+		newText.setBackground(textAreaShading);
 		newText.setLineWrap(true);
 		newText.setWrapStyleWord(true);
 		newText.setVisible(true);
-		textPanel.add(BorderLayout.CENTER, newText);
+		//textPanel.add(BorderLayout.CENTER, newText);
 		
 		textPanel.setVisible(true);
 		
@@ -110,7 +113,8 @@ public class EditScreen{
 	
 		//set layout and size of frame
 		screenPanel.add(topToolbar,BorderLayout.NORTH);
-		screenPanel.add(textPanel, BorderLayout.CENTER); 
+		//screenPanel.add(textPanel, BorderLayout.CENTER); 
+		screenPanel.add(newText, BorderLayout.CENTER); 
 		screenPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		//frame.getContentPane().add(BorderLayout.NORTH,topToolbar);
