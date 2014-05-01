@@ -73,7 +73,10 @@ public class TaskMaster {
 		priority = new JButton("Priority");
 		category = new JLabel("Category");
 		categories = new JComboBox(catS); //currently empty
+<<<<<<< HEAD
 		categories.setSelectedIndex(3);
+=======
+>>>>>>> FETCH_HEAD
 		
 		manage = new JLabel("Manage Tasks");
 		create = new JButton("Create");
@@ -161,6 +164,7 @@ public class TaskMaster {
 		categories.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e){
+<<<<<<< HEAD
 				int selected = categories.getSelectedIndex();
 				if(selected == 0){//personal
 					taskGrid.setDisplayState(DisplayState.category, catS[0]); 
@@ -171,6 +175,18 @@ public class TaskMaster {
 				}else{
 					taskGrid.setDisplayState(DisplayState.all, catS[3]); 
 				}
+=======
+				/*int selected = categories.getSelectedIndex();
+				if(selected == 0){//personal
+					taskGrid.setDisplayState(catS[0]); 
+				} else if (selected == 1){//work
+				    taskGrid.setDisplayState(catS[1]); 
+				} else if(selected == 1){//other
+					taskGrid.setDisplayState(catS[2]); 
+				}else{
+					taskGrid.setDisplayState(catS[3]); 
+				}*/
+>>>>>>> FETCH_HEAD
 			
 			}
 		});
