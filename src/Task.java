@@ -205,7 +205,14 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		changeSelection();
+		
+		if(e.getClickCount() == 2){
+			System.out.println("\ndouble click!\n");
+			taskMaster.removeSelection(this);
+			taskMaster.openEditScreen(this);
+		} else {
+			changeSelection();
+		}
 	}
 
 	public void changeSelection(){

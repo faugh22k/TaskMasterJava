@@ -38,17 +38,7 @@ public class FlatButton extends JButton{
 		this.border = border;
 		highlight = main.brighter();
 		title = text;
-		setRolloverEnabled(true);
-		getModel().addChangeListener(new ChangeListener(){
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				System.out.println("state changed!");
-				repaint();
-				
-			}
-			
-		});
+		setRolloverEnabled(true); 
 	} 
 	
 	public void changeColors(Color main, Color outside){
@@ -89,24 +79,20 @@ public class FlatButton extends JButton{
 		
 		if(getModel().isArmed()){
 			g2.setColor(highlight); 
-			g2.fillRoundRect(left, top, rectWidth, rectHeight, 15, 15);
-			System.out.println("is armed");
+			g2.fillRoundRect(left, top, rectWidth, rectHeight, 15, 15); 
 		} 
 		
-		else {
-			System.out.println("not armed");
+		else { 
 			g2.setColor(background);
 			g2.fillRoundRect(left, top, rectWidth, rectHeight, 15, 15);
 		}
 		
-		if(getModel().isRollover()){
-			System.out.println("is rollover");
+		if(getModel().isRollover()){ 
 			g2.setStroke(stroke);
 			g2.setColor(border);
 			g2.drawRoundRect(left, top, rectWidth, rectHeight, 15, 15); 
 		}
-		
-		System.out.println("about to draw string!!! " + title);
+		 
 		g2.setColor(Color.BLACK);
 		g2.drawString(title, textLeft, textTop + 8); 
 		

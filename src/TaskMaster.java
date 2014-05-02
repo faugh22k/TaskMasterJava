@@ -78,6 +78,7 @@ public class TaskMaster {
 		toolbar.setBackground(Color.darkGray);
 		//toolbar.setBackground(new Color(253, 250, 199));
 		toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
+		 
 		//need to pin it to the left?
 		
 		sortBy = new JLabel ("Sort by:");
@@ -123,6 +124,7 @@ public class TaskMaster {
 		manageSButtons.add(dueDate);
 		manageSButtons.add(priority);
 		manageSort.setLayout(new BorderLayout());
+		manageSort.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
 		manageSort.add(sortBy, BorderLayout.NORTH);
 		manageSort.add(manageSButtons, BorderLayout.CENTER); 
 		manageSButtons.setOpaque(false);
@@ -289,8 +291,8 @@ public class TaskMaster {
 			taskGrid.addNewTask(newTask);
 		}
 		
-		newTask.changeSelection();
-		selected.add(newTask);
+		//newTask.changeSelection();
+		//selected.add(newTask);
 		
 		switchEditToGrid();
 	}
