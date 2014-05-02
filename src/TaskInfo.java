@@ -1,17 +1,13 @@
 package taskMaster;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.sql.Time;
+import java.awt.Color; 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-
-import javax.swing.JComponent; 
+import java.util.GregorianCalendar; 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -30,9 +26,7 @@ public class TaskInfo extends JPanel{
 
     // low, normal, or high importance possible
     private ImportanceLevel importance;
-
-    // TODO set to true if due is within certain range of current date
-    // TODO said determination (namely, retrieval of current date) not yet done
+ 
     private boolean isCurrent;
     private boolean completed;
     private Color color;
@@ -43,8 +37,7 @@ public class TaskInfo extends JPanel{
    
 
     // primary constructor 
-    public TaskInfo(ImportanceLevel level, String due){
-        // TODO must decide how to deal with getting due date, decided whether it's current
+    public TaskInfo(ImportanceLevel level, String due){ 
         created = new Date();
         edited = created;
         
@@ -54,7 +47,7 @@ public class TaskInfo extends JPanel{
         this.setOpaque(false);
        
         
-        formatDate = new SimpleDateFormat("MM/dd"); //new SimpleDateFormat("MM/dd/yyyy  HH:mm"); 
+        formatDate = new SimpleDateFormat("MM/dd");  
         try {
 			this.due = formatDate.parse(due);
 		} catch (ParseException e) {}
@@ -62,7 +55,7 @@ public class TaskInfo extends JPanel{
         if(this.due != null){
         	displayDueDate = new JLabel(formatDate.format(this.due)); 
         } else {
-        	displayDueDate = new JLabel(""); 
+        	displayDueDate = new JLabel("  "); 
         }
         this.add(displayDueDate, BorderLayout.EAST);
         
@@ -71,71 +64,65 @@ public class TaskInfo extends JPanel{
         determineIsCurrent(now);
     }
 
-    public boolean determineIsCurrent(Date now){ 
+	public boolean determineIsCurrent(Date now) {
+		boolean updated = false;
+		boolean tmp = false;
+
+		int distance = determineDistance(now);
+
+		/*
+		 * if distance is negative, the task is in the past currently, we let
+		 * tasks from farther back than yesterday fall out of current current 
+		 * so that they don't clutter up the immediate tasks.  
+		 */
+		if (distance <= 2 && distance >= -1) {
+			tmp = true;
+		}
+
+		if (isCurrent != tmp) {
+			updated = true;
+		}
+
+		isCurrent = tmp;
+		return updated;
+	}
+    
+    private int determineDistance(Date now){
+    	if(due == null){
+    		return 0;
+    	}
+    	
+    	int distance = 40;
     	
     	Calendar calendar = GregorianCalendar.getInstance();
-    	int month = calendar.get(Calendar.MONTH) + 1; // starts at 0 with January
-    	int day = calendar.get(Calendar.DATE); // day of the month
-    	
-    	//int[] current = getMonthDay(now); 
-    	int[] dueBy = getMonthDay(due);
-    	System.out.println("\n\nDetermining is Current!!! ");
-    	
-    	System.out.println("date = " + getFormattedDate()); 
-    	
-    	System.out.println("priority = " + importance.toString());  
-    	
-    	boolean updated = false;
-    	boolean tmp = false; 
-    	
-    	if(month == dueBy[0] && (day >= dueBy[1] - 2 && day <= (dueBy[1]))){ 
-    		System.out.println("I am a current task!");
-    		tmp = true;
-    	} else {
-    		System.out.println("I am a future task!");
-    	}
-        
-    	System.out.println("now: " + month + "/" + day);
-    	System.out.println("due: " + dueBy[0] + "/" + dueBy[1]);
-    	
-    	if (isCurrent != tmp){
-    		updated = true;
-    	}
-    	
-        isCurrent = tmp;
-        System.out.println("Returning from Determining is Current!!!  \n\n");
-        return updated;
+		int monthN = calendar.get(Calendar.MONTH); // starts at 0 with January 
+		int dayN = calendar.get(Calendar.DATE); // day of the month 
+		
+		int monthD = due.getMonth();
+		int dayD = due.getDate();
+		
+		// the task was due the previous month (mod handles the case where it was due in December)
+		if ((monthD + 1) % 12 == monthN){ 
+			// average number of days in a month is 30.4167... 
+			// erring on the side of letting an older task slip into current
+			// rather than one dropping off too quickly
+			distance = -((30 - dayD) + dayN); 
+			//monthD++;
+		}
+		// the task is due next month (mod handles the case where it is currently December) 
+		else if (monthD  == (monthN + 1) % 12){ 
+			distance = (30 - dayN) + dayD; 
+			monthD--;
+		}
+		// if the months match, compare only the days
+		else if(monthN == monthD){ 
+			//distance = Math.max(dayD - dayN, dayN - dayD);
+			distance = dayD - dayN;
+		} 
+    	 
+    	return distance;
     }
-    
-    public int[] getMonthDay(Date date){
-    	int[] data = new int[2];
-    	
-    	String format = formatDate.format(date);
-    	System.out.println("formatted date: " + format);
-    	
-    	int tmpDay = date.getDate();
-    	int tmpMonth = date.getMonth();
-    	
-    	String[] extracted = format.split("/"); 
-    	try {
-    		/*if(extracted[0].charAt(0) == '0'){
-    			extracted[0] = extracted[0].substring(1, 2);
-    		} 
-    		if(extracted[1].charAt(0) == '0'){
-    			extracted[1] = extracted[1].substring(1, 2);
-    		}*/
-    		
-    		int month = Integer.parseInt(extracted[0]);
-    		int day = Integer.parseInt(extracted[1]);
-    		data[0] = month;
-    		data[1] = day;
-    	} catch (NumberFormatException e){
-    		data = null;
-    	}
-    	
-    	return data;
-    }
-
+     
     public ImportanceLevel getImportance(){
         return importance;
     }

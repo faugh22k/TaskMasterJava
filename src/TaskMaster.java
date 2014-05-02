@@ -19,7 +19,7 @@ public class TaskMaster {
 	JButton dueDate;
 	JButton priority;
 	JLabel category;
-	JComboBox categories;
+	JComboBox<String> categories;
 	
 	JLabel manage;
 	JButton create;
@@ -28,6 +28,8 @@ public class TaskMaster {
 	 
 	JPanel tasksPanel;
 	 
+	JButton addCategory;
+	JButton deleteCategory;
 	
 	TaskGrid taskGrid;
 	JFrame frame;
@@ -53,7 +55,7 @@ public class TaskMaster {
 		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(2014, 5, 5));
 		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, new Date(2014, 5, 4));*/
 		
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "05/01"); 
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
 		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
 		taskGrid.createNewTask("Third ", ImportanceLevel.high, "05/02");
 		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, "05/03");
@@ -68,6 +70,8 @@ public class TaskMaster {
 		frame = new JFrame();
 		
 		toolbar = new JPanel();
+		toolbar.setMaximumSize(new Dimension(50, 800));
+		//toolbar.setMinimumSize(new Dimension(50, 200));
 		//toolbar.setBackground(Color.darkGray);
 		toolbar.setBackground(Color.darkGray);
 		//toolbar.setBackground(new Color(253, 250, 199));
@@ -79,11 +83,15 @@ public class TaskMaster {
 		defaultS = new JButton("Default");
 		dueDate = new JButton("Due Date");
 		priority = new JButton("Priority");
+		
 		category = new JLabel("Category");
 		category.setForeground(Color.WHITE);
-		categories = new JComboBox(catS); //currently empty
+		categories = new JComboBox<String>(catS); //currently empty
 		categories.setPrototypeDisplayValue("XXXXXXXXX"); 
+		//categories.setPreferredSize(new Dimension(50, 20));
 		categories.setSelectedIndex(3);
+		addCategory = new JButton("Add");
+		deleteCategory = new JButton("Remove");
 
 		
 		manage = new JLabel("Manage Tasks");
@@ -92,32 +100,37 @@ public class TaskMaster {
 		edit = new JButton("Edit");
 		delete = new JButton("Delete");
 		 
-		 
-		JPanel manageCategory = new JPanel();
-		manageCategory.setLayout(new BoxLayout(manageCategory, BoxLayout.Y_AXIS));
-		//manageCategory.setLayout(new BorderLayout());
-		manageCategory.add(category);
-		manageCategory.add(categories); 
-		//manageCategory.add(category, BorderLayout.NORTH);
-		//manageCategory.add(categories, BorderLayout.SOUTH); 
-		manageCategory.setOpaque(false);
+		/* normal = new Color(191, 227, 74); 
+        high = new Color(255, 255, 160);
+        low = new Color(99, 195, 210);*/  
 		
-		//toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
+		Color green = new Color(191, 227, 74);
+		Color yellow = new Color(255, 255, 160);
+		Color blue = new Color(99, 195, 210);
+		
+		/*edit.setBackground(green);
+		create.setBackground(blue);
+		delete.setBackground(yellow);
+		edit.setOpaque(true);
+		create.setOpaque(true);
+		delete.setOpaque(true);
+		edit.setBorderPainted(false);
+		create.setBorderPainted(false);
+		delete.setBorderPainted(false);*/
+		
+		/*toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
 		toolbar.add(sortBy);
 		toolbar.add(defaultS);
 		toolbar.add(dueDate);
 		toolbar.add(priority);
-		
-		//toolbar.add(category);
-		//toolbar.add(categories); 
-		toolbar.add(manageCategory);
-		
+		toolbar.add(category);
+		toolbar.add(categories);  
 		toolbar.add(manage);
 		toolbar.add(create);
 		toolbar.add(edit);
-		toolbar.add(delete);
+		toolbar.add(delete);*/
 		
-		/*JPanel manageTasks = new JPanel();
+		JPanel manageTasks = new JPanel();
 		JPanel manageTButtons = new JPanel();
 		//manageTButtons.setLayout(new GridLayout(0,1));
 		manageTButtons.setLayout(new BoxLayout(manageTButtons, BoxLayout.Y_AXIS));
@@ -142,9 +155,30 @@ public class TaskMaster {
 		manageSButtons.setOpaque(false);
 		
 		JPanel manageCategory = new JPanel();
-		//manageCategory.setLayout(new BoxLayout(manageCategory, BoxLayout.Y_AXIS));
+		/*manageCategory.setLayout(new BoxLayout(manageCategory, BoxLayout.Y_AXIS));
 		manageCategory.add(category);
-		manageCategory.add(categories); 
+		manageCategory.add(categories); */
+		
+		
+		JPanel manageCButtons = new JPanel();
+		
+		manageCButtons.setLayout(new BoxLayout(manageCButtons, BoxLayout.Y_AXIS));
+		manageCButtons.add(addCategory);
+		manageCButtons.add(deleteCategory);
+		manageCButtons.setOpaque(false);
+		
+		JPanel manageCComponents = new JPanel();
+		//manageCComponents.setLayout(new BoxLayout(manageCComponents, BoxLayout.Y_AXIS));
+		//manageCComponents.add(categories);
+		//manageCComponents.add(manageCButtons);
+		manageCComponents.setLayout(new BorderLayout());
+		manageCComponents.add(categories, BorderLayout.NORTH);
+		manageCComponents.add(manageCButtons, BorderLayout.CENTER);
+		manageCComponents.setOpaque(false);
+		
+		manageCategory.setLayout(new BorderLayout());
+		manageCategory.add(category, BorderLayout.NORTH);
+		manageCategory.add(manageCComponents, BorderLayout.CENTER);
 		
 		manageCategory.setOpaque(false);
 		manageSort.setOpaque(false);
@@ -153,12 +187,13 @@ public class TaskMaster {
 		//toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
 		toolbar.setBorder(BorderFactory.createEmptyBorder(5,20,5,5));   
 		//toolbar.setBackground(Color.DARK_GRAY);
-		toolbar.setBackground(new Color(253, 250, 199)); //new Color(211, 247, 94)
+		//toolbar.setBackground(new Color(253, 250, 199)); //new Color(211, 247, 94)
 		toolbar.add(manageSort);
 		toolbar.add(manageCategory);
-		toolbar.add(manageTasks);*/
+		toolbar.add(manageTasks);
 		
-		
+		FlatButton test = new FlatButton(green, "Test");
+		toolbar.add(test);
 		initListeners();
 		//set layout and size of frame
 

@@ -22,10 +22,10 @@ public class TaskOrderPriority implements TaskOrderer {
         //System.out.println("the tasks have equal priority");
         
         if(one.getDue() == null){
-        	return 1;
+        	return -1;
         }
         if(two.getDue() == null){
-        	return -1;
+        	return 1;
         }
         
         // if same priority, order by due date
