@@ -29,10 +29,14 @@ public class FlatButton extends JButton{
 	}
 	
 	public FlatButton(Color color, String text){
+		this(color, color.darker(), text);
+	}
+	
+	public FlatButton(Color main, Color border, String text){
 		super(text);
-		background = color;
-		border = color.darker();
-		highlight = color.brighter();
+		background = main;
+		this.border = border;
+		highlight = main.brighter();
 		title = text;
 		setRolloverEnabled(true);
 		getModel().addChangeListener(new ChangeListener(){
@@ -45,6 +49,17 @@ public class FlatButton extends JButton{
 			}
 			
 		});
+	} 
+	
+	public void changeColors(Color main, Color outside){
+		if(outside == null){
+			border = main.darker();
+		} else {
+			border = outside;
+		}
+		
+		background = main;
+		highlight = main.brighter();
 	}
 	
 	public void paint (Graphics g){

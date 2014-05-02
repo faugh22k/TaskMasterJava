@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -25,8 +27,8 @@ public class EditScreen extends JPanel{
 	
 	private JPanel bottomPanel;
 	private JComboBox priority;
-	private JButton cancel;
-	private JButton save;
+	private FlatButton cancel;
+	private FlatButton save;
 	
 	//temp task and features
 	private String textInput;
@@ -43,6 +45,13 @@ public class EditScreen extends JPanel{
 	private Task editingTask; 
 	private Color background;
 	private Color textAreaShading;
+	
+	private String initialTaskText = "What do you need to do? :) ";
+	private String initialDateText = "mm/dd";
+	
+	Color green = new Color(191, 227, 74);
+	Color yellow = new Color(255, 255, 160);
+	Color blue = new Color(99, 195, 210);
 	
 	EditScreen(TaskMaster taskMaster, Task toEdit){
 		this.taskMaster = taskMaster;
@@ -77,15 +86,15 @@ public class EditScreen extends JPanel{
 		newText.setLineWrap(true);
 		newText.setWrapStyleWord(true); 
 		textPanel.add(BorderLayout.CENTER, newText);
-		
+		 
 		
 		bottomPanel = new JPanel();
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5,5,2,0)); 
 		bottomPanel.setOpaque(false);
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		priority = new JComboBox(priorityS); 
-		cancel = new JButton("Cancel");
-		save = new JButton("Save");
+		cancel = new FlatButton(blue, yellow, "Cancel");
+		save = new FlatButton(blue, yellow, "Save");
 		bottomPanel.add(new JLabel("Choose Priority:"));
 		bottomPanel.add(priority);
 		bottomPanel.add(cancel);
@@ -151,13 +160,59 @@ public class EditScreen extends JPanel{
 				int selected = priority.getSelectedIndex();
 				if(selected == 0){
 					background = Task.low;
+					save.changeColors(green, yellow);
+					cancel.changeColors(green, yellow);
 				} else if (selected == 1){
 					background = Task.normal;
+					save.changeColors(blue, yellow);
+					cancel.changeColors(blue, yellow);
 				} else {
 					background = Task.high;
+					save.changeColors(green, blue);
+					cancel.changeColors(green, blue);
 				}
 				resetBackground();
 			}
+		});
+	
+		newText.addFocusListener(new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(newText.getText().equals(initialTaskText)){
+					newText.setText("");
+				}
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(newText.getText().equals("")){
+					newText.setText(initialTaskText);
+				}
+				
+			}
+			
+		});
+		
+		date.addFocusListener(new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(date.getText().equals(initialDateText)){
+					date.setText("");
+				}
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(date.getText().equals("")){
+					date.setText(initialDateText);
+				}
+				
+			}
+			
 		});
 	}
 	
@@ -171,8 +226,8 @@ public class EditScreen extends JPanel{
 			date.setText(editingTask.getFormattedDueDate());
 		} else {
 			priority.setSelectedIndex(1);
-			newText.setText("Please input text here.");
-			date.setText("mm/dd");
+			newText.setText(initialTaskText);
+			date.setText(initialDateText);
 		}
 	}
 	public void initBackground(){
@@ -181,24 +236,7 @@ public class EditScreen extends JPanel{
 		} else {
 			background = Task.normal;
 		}
-	}
-	private Date getInputtedDate(String s){
-		if(s.equals("") || s.equals("MM/dd")){
-			return null;
-		}
-		
-		/*String d = s;
-		String[] tokens = d.split("/");
-		int[] dates= new int[tokens.length];
-		for (int i=0; i<tokens.length;i++){
-		  dates[i] = Integer.parseInt(tokens[i]);	
-		}
-		Date tempDate = new Date(dates[2],dates[1],dates[0]); //this is deprecated, is this correct order?
-		return tempDate;*/
-		
-		//Date date = task.
-		return null;
-	}
+	} 
 	
 	public JPanel getJPanel(){ return this;}
 	
