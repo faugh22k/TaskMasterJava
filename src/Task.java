@@ -40,7 +40,8 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
     public static Color normal;
     public static Color low;
     
-   
+   public static int width = 160;
+   public static int height = 170;
     
     private TaskMaster taskMaster;
 
@@ -86,9 +87,9 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
         }
         
         this.setBackground(background); 
-        this.setSize(new Dimension(200, 200));
-        this.setMaximumSize(new Dimension(200, 200));
-        this.setMinimumSize(new Dimension(200, 200)); 
+        this.setSize(new Dimension(160, 170));
+        this.setMaximumSize(new Dimension(190, 200));
+        this.setMinimumSize(new Dimension(160, 170)); 
         this.setFocusable(true);
         this.addMouseListener(this);
        // this.addFocusListener(this);
@@ -206,8 +207,7 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(e.getClickCount() == 2){
-			System.out.println("\ndouble click!\n");
+		if(e.getClickCount() == 2){ 
 			taskMaster.removeSelection(this);
 			taskMaster.openEditScreen(this);
 		} else {
@@ -218,12 +218,10 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
 	public void changeSelection(){
 		selected = !selected;
 		
-		if(selected){
-			System.out.println("I'm selected!");
+		if(selected){ 
 			setBackground(brighter());
 			taskMaster.addSelection(this); 
-		} else {
-			System.out.println("I'm not selected now");
+		} else { 
 			setBackground(background);
 			taskMaster.removeSelection(this); 
 		}

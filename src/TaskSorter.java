@@ -18,36 +18,7 @@ public class TaskSorter implements Iterable<Task> {
 		array = new ArrayList<Task>();
 	}
 	
-	public void add(Task toAdd){
-		//System.out.println("in add task ***********************");
-		/*if(size == 0){
-			list.addFirst(toAdd);
-			size++;
-			return;
-		}
-		
-		Task last = null;
-		int index = 0;
-		Task current;
-		for(int i = 0; i < list.size(); i++){ 
-			current = list.get(i);
-			
-			System.out.println("current = " + current);
-			if(current == null){
-				continue;
-			}
-			
-			if(compare.compare(toAdd, current) == -1){
-				list.add(index, last); 
-				size++;
-				return;
-			}
-			index++;
-			last = current;
-		}
-		
-		size++;
-		list.addLast(toAdd);*/
+	public void add(Task toAdd){ 
 		
 		Task current;
 		for(int i = 0; i < array.size(); i++){
@@ -60,11 +31,8 @@ public class TaskSorter implements Iterable<Task> {
 		}
 		
 		array.add(toAdd);
-	} 
-	
-	public LinkedList<Task> getList(){
-		return list; 
-	}
+	}  
+	 
 	
 	public Iterator<Task> iterator(){ 
 		return array.iterator();
@@ -74,8 +42,8 @@ public class TaskSorter implements Iterable<Task> {
 		array.remove(toRemove);
 	}
 	
-	public int size(){
-		return list.size();
+	public int size(){ 
+		return array.size();
 	}
 	
 	public String toString(){

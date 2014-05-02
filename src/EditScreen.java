@@ -146,7 +146,8 @@ public class EditScreen extends JPanel{
 	        	 //fake color passed for now, category should be passed last
 	        	tempTask = new Task(textInput, tempImp, dateInput, taskMaster);
 	        	
-	        	System.out.println("A task was made with text:"+ " " + tempTask.getText());
+	        	tempTask.addCategory(tempCategory);
+	        	 
 	        	//frame.dispose();
 	        	//do i need to make this whole class null after?
 	        	

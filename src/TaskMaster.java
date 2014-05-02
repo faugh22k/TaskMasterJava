@@ -21,6 +21,8 @@ public class TaskMaster {
 	JLabel category;
 	JComboBox<String> categories;
 	
+	JScrollPane scroll;
+	
 	JLabel manage;
 	FlatButton create;
 	FlatButton delete;
@@ -160,13 +162,22 @@ public class TaskMaster {
 		toolbar.add(manageCategory);
 		toolbar.add(manageTasks);
 		 
-		initListeners();
+		initListeners(); 
+		 
+		
+		scroll = new JScrollPane(taskGrid);
+		scroll.setBackground(Color.DARK_GRAY);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		//scroll.setPreferredSize(new Dimension(900, 500));
 		
 		//set layout and size of frame 
-		frame.getContentPane().add(BorderLayout.WEST,toolbar);
-		frame.getContentPane().add(BorderLayout.CENTER,taskGrid);
+		frame.getContentPane().setLayout(new BorderLayout());
+		frame.getContentPane().add(BorderLayout.WEST,toolbar); 
+		//frame.getContentPane().add(BorderLayout.CENTER,taskGrid);  
+		frame.getContentPane().add(BorderLayout.CENTER,scroll);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000,500);
+		frame.setSize(1000,538);
 		frame.setVisible(true);
 		frame.setFocusable(true); 
 		frame.setLocationRelativeTo(null); 
@@ -177,8 +188,7 @@ public class TaskMaster {
 		defaultS.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
-	        {       
-	        	System.out.println("relaxed date sort");
+	        {        
 	            //Order by default queue; needs flush
 	        	taskGrid.changeSort(SortState.relaxedDate); 
 	        }
@@ -186,8 +196,7 @@ public class TaskMaster {
 		dueDate.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
-	        {       
-	        	System.out.println("strict date sort");
+	        {        
 	            //Order by strictdatequeue
 	        	taskGrid.changeSort(SortState.strictDate);  	 	
 	        }
@@ -195,8 +204,7 @@ public class TaskMaster {
 		priority.addActionListener(new ActionListener() 
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
-	        {       
-	        	System.out.println("priority sort");
+	        {        
 	            //still need to flush current task display
 	        	taskGrid.changeSort(SortState.priority);
 	        }
@@ -260,13 +268,35 @@ public class TaskMaster {
 			}
 		});
 		
-		
+		taskGrid.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2){
+					deselectAll();
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			
+		});
 	}
 	
 	public void openEditScreen(Task toEdit){
 		EditScreen ed = new EditScreen(this, toEdit);
     	editScreen = ed.getJPanel();
-    	frame.remove(taskGrid);
+    	//frame.remove(taskGrid);
+    	frame.remove(scroll);
     	frame.getContentPane().add(BorderLayout.CENTER,editScreen);
     	frame.repaint();
     	frame.validate();
@@ -303,7 +333,8 @@ public class TaskMaster {
 			editScreen = null;
 		}
 		
-		frame.getContentPane().add(BorderLayout.CENTER, taskGrid);
+		//frame.getContentPane().add(BorderLayout.CENTER, taskGrid);
+		frame.getContentPane().add(BorderLayout.CENTER, scroll);
 		frame.validate();
 		frame.repaint();
 	}
@@ -314,6 +345,13 @@ public class TaskMaster {
 	
 	public void removeSelection(Task remove){
 		selected.remove(remove);
+	}
+	
+	public void deselectAll(){
+		while(selected.size() != 0){
+			Task current = selected.remove(selected.size()-1);
+			current.changeSelection();
+		}
 	}
 	
 	public static void main(String[] args){

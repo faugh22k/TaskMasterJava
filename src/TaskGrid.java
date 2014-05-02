@@ -1,6 +1,7 @@
 package taskMaster;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +22,8 @@ public class TaskGrid extends JPanel{
     // predictably, all the tasks
     private LinkedList<Task> allTasks;
 
+    private int gridWidth = 5;
+    
     // grouped by importance
     private LinkedList<Task> low;
     private LinkedList<Task> normal;
@@ -34,6 +37,8 @@ public class TaskGrid extends JPanel{
 
     private HashSet<String> categories;
     private TaskMaster taskMaster;
+    
+    private String currentCategory;
 
     // these hold the order of the tasks according to different priorities
 
@@ -58,7 +63,7 @@ public class TaskGrid extends JPanel{
         // TODO read in initial values from memory somewhere??
 
     	// infinite rows, five columns
-    	GridLayout layout = new GridLayout(0, 5);  
+    	GridLayout layout = new GridLayout(0, gridWidth);   
     	layout.setHgap(10);
     	layout.setVgap(10); 
     	
@@ -73,6 +78,7 @@ public class TaskGrid extends JPanel{
         current = new LinkedList<Task>();
         inFuture = new LinkedList<Task>();
 
+        categories = new HashSet<String>();
 
         orderedByStrictDate = new TaskSorter(new TaskOrderStrictDueDate());
         orderedByRelaxedDate = new TaskSorter(new TaskOrderRelaxedDueDate());
@@ -92,6 +98,36 @@ public class TaskGrid extends JPanel{
 
     }
 
+    public void changeSize(){
+    	int width;
+    	int height;
+    	
+    	int numberTasks = -1;
+    	
+    	if(displayState == DisplayState.all){
+    		numberTasks += currentSorting.size();
+    	} else {
+    		getCategoryList(currentCategory);
+    		if(selectedCategory == null || selectedCategory.size() == 0){
+    			numberTasks += currentSorting.size();
+    		} else {
+    			numberTasks += selectedCategory.size();
+    		}
+    	}
+    	
+    	System.out.println("number tasks: " + numberTasks);
+    	int numberRows = (numberTasks/gridWidth) + 1;
+    	System.out.println("number rows: " + numberRows);
+    	
+    	height = numberRows*Task.height;
+    	width = gridWidth*Task.width;
+    	
+    	System.out.println("I want to be size: (" + width  + "," +  height + ")" );
+    	
+    	setPreferredSize(new Dimension(width,height)); 
+    	setMinimumSize(new Dimension(width, Task.height*2));
+    }
+    
     // corrects the location of the given task (in the different lists)
     public void updateTaskLocation(Task task){
         // if is current, make sure isn't in future, is in current
@@ -179,7 +215,7 @@ public class TaskGrid extends JPanel{
         orderedByRelaxedDate.remove(task);
         
         this.remove(task);
-        
+         
         if(updateDisplay){
         	//repaint();
         	//validate();
@@ -305,25 +341,21 @@ public class TaskGrid extends JPanel{
             if(current.isCategory(category)){
                 selectedCategory.add(current);
             }
-        }
+        } 
     }
 
     public void changeSort(SortState newSort){
-    	if(newSort == sortState){
-    		System.out.println("sort state unchanged");
+    	if(newSort == sortState){ 
     		return;
     	} 
-    	
-    	System.out.println("changing sort from " + sortState + " to " + newSort);
-    	
+    	 
     	if(newSort == SortState.priority){
     		currentSorting = orderedByPriority;
     	} 
     	else if (newSort == SortState.relaxedDate){
     		currentSorting = orderedByRelaxedDate;
     	} 
-    	else {
-    		System.out.println("now sorting by strict date!");
+    	else { 
     		currentSorting = orderedByStrictDate;
     	}
     	
@@ -357,59 +389,27 @@ public class TaskGrid extends JPanel{
     	System.out.println(relaxed +  "\n" + priority + "\n" + strict + "\n***" + currentSort); 
     }
     
-    public void redisplayAll(){ 
-    	//System.out.println("removing everything from the grid");
+    public void redisplayAll(){  
+    	changeSize();
     	
     	this.removeAll();   
     	
-    	//repaint();
-    	//String addedOrder = "";
-    	//this.setLayout(new GridLayout(0,5));
+    	
     	 
-    	for(Task current : currentSorting){  
-    		this.add(current);  
-    		//addedOrder += current.getText() + ", ";
-    		//repaint();
-    	}   
+    	if(displayState != DisplayState.all){
+    		getCategoryList(currentCategory);
+    	}
     	
-    	/*LinkedList<Task> list = currentSorting.getList();
-    	System.out.println("list = " + list);
-    	Task current = list.getFirst();
-		for(int i = 0; i < list.size(); i++){ 
-			System.out.println("current = " + current);
-			if(current == null){
-				continue;
-			}
-			current = list.get(i);
-    		this.add(current);  
-    		addedOrder += current.getText() + ", ";
-    	}*/
-    	
-    	//this.add(currentSorting.peek());
+    	if(displayState == DisplayState.all || selectedCategory == null || selectedCategory.size() == 0){
+    		for(Task current : currentSorting){  
+    			this.add(current);   
+    		}   
+    	} else {
+    		for(Task current : selectedCategory){
+    			this.add(current);
+    		}
+    	}
     	 
-    	//this.setLayout(new GridLayout(0,5));
-    	
-    	/*Task[] tasks = new Task[currentSorting.size()];
-    	currentSorting.toArray(tasks);
-    	 
-    	TaskOrderPriority checking = new TaskOrderPriority();
-    	Task last = tasks[0];
-    	
-    	System.out.println("\n****\n"); 
-    	for (int i = 0; i < 9 && i < tasks.length; i++){
-    		this.add(tasks[i]);
-    		
-    		System.out.println("\ncompare(last, current) = " + checking.compare(last, tasks[i]));
-    		System.out.println("last: " + last + ", current: " + tasks[i]);
-    		last = tasks[i];
-    	}*/
-    	
-    	//System.out.println(addedOrder);
-    	//System.out.println(currentSorting.toString());
-    	
-    	//printQueues();
-    	
-    	//invalidate();
     	repaint();
     	validate();
     	 
@@ -417,7 +417,8 @@ public class TaskGrid extends JPanel{
 
     public void setDisplayState(DisplayState category, String categoryName){
     	displayState = category;
-    	// TODO finish implementing this method
+    	currentCategory = categoryName; 
+    	redisplayAll();
     }
 }
 
