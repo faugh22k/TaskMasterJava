@@ -13,7 +13,19 @@ import java.util.Date;
 import javax.swing.*;
 
 
-
+/**
+ * When given a Task to edit, fills a screen with all the information for 
+ * the Task, and updates the fields upon pressing save.
+ * 
+ * For creating a task, sets fields to initial default values (for the text
+ * fields, these values disappear on click and reappear when focus is lost,
+ * if no text is present)
+ * 
+ * Allows user to set no Date. 
+ * 
+ * @author Kim, Jackie
+ *
+ */
 public class EditScreen extends JPanel{
 	
 	private JPanel topToolbar;
@@ -124,6 +136,9 @@ public class EditScreen extends JPanel{
 		newText.setVisible(true);
 	}
 	
+	/**
+	 * Add the listeners to all the fields. 
+	 */
 	private void initListeners(){
 		cancel.addActionListener(new ActionListener() 
 	    {           	
@@ -227,9 +242,17 @@ public class EditScreen extends JPanel{
 		});
 	}
 	
+	/**
+	 * Update background (used for changing color with priority)
+	 */
 	public void resetBackground(){
 		this.setBackground(background);
 	}
+	
+	/**
+	 * Fills the fields with their initial values (based on presence or 
+	 * absence of a task to be editing)
+	 */
 	public void setInitialValues(){
 		if(editingTask != null){
 			newText.setText(editingTask.getText());
@@ -252,6 +275,10 @@ public class EditScreen extends JPanel{
 			date.setText(initialDateText);
 		}
 	}
+	
+	/**
+	 * Determines initial value of background. 
+	 */
 	public void initBackground(){
 		if(editingTask != null){
 			background = editingTask.getColor();
@@ -260,6 +287,8 @@ public class EditScreen extends JPanel{
 		}
 	} 
 	
-	public JPanel getJPanel(){ return this;}
+	public JPanel getJPanel(){ 
+		return this;
+	}
 	
 }

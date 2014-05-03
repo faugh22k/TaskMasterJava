@@ -18,15 +18,16 @@ import javax.swing.JTextArea;
 /**
  * Encompasses Task data, logic, and display
  */
-public class Task extends JPanel implements MouseListener/*FocusListener*/ {  
+public class Task extends JPanel implements MouseListener  {  
 
     // the buttons area for this task
+	// ultimately, empty at this time. In future might
+	// add buttons with more options. 
     private TaskControls controls;
 
     // the text stored in this task
     private TaskText text;
-    
-    //private JTextArea textArea;
+     
 
     // the data: priority, dates, color
     private TaskInfo info;
@@ -104,15 +105,7 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
         //background.setColor(0xBFE34A);
         // darker version: 5F8100  (79, 129, 0) 
     }
-
-   /* public Task(String text, ImportanceLevel importance, TaskMaster taskMaster){ 
-        this(text, importance, null, taskMaster);
-    }
-
-    public Task(String text, TaskMaster taskMaster){
-        this(text, ImportanceLevel.normal, taskMaster); 
-    }*/
-
+ 
     public ImportanceLevel getImportance(){
         return info.getImportance();
     }
@@ -241,17 +234,6 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
-    
-    /*public void focusLost(FocusEvent e){
-    	System.out.println("don't have focus now.");
-		taskMaster.setSelected(null); 
-		this.setBackground(background.darker());
-	}
-	
-	public void focusGained(FocusEvent e){
-		System.out.println("have focus!");
-		taskMaster.setSelected(this);
-		this.setBackground(background);
-	}*/
+     
 }
 

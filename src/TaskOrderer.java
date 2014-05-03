@@ -3,7 +3,7 @@ package taskMaster;
 import java.util.Comparator;
 
 /**
- * Created by kcf412 on 4/27/14.
+ * Interface for the Task Comparators
  */
 public interface TaskOrderer extends Comparator<Task> {
 

@@ -10,45 +10,53 @@ import java.util.HashSet;
 
 import javax.swing.JComponent.*;
 
+/**
+ * Manages the entire GUI. 
+ * 
+ * Gives users a Toolbar to sort tasks, control categories of tasks, and to create/edit or remove tasks. 
+ * 
+ * @author Kim, Jackie
+ *
+ */
 public class TaskMaster {
 	
 	//create side toolbar
-	JPanel toolbar;
+	private JPanel toolbar;
 	
-	JLabel sortBy;
-	FlatButton defaultS;
-	FlatButton dueDate;
-	FlatButton priority;
-	JLabel category;
-	JComboBox<String> categories;
+	private JLabel sortBy;
+	private FlatButton defaultS;
+	private FlatButton dueDate;
+	private FlatButton priority;
+	private JLabel category;
+	private JComboBox<String> categories;
 	
-	JScrollPane scroll;
+	private JScrollPane scroll;
 	
-	JLabel manage;
-	FlatButton create;
-	FlatButton delete;
-	FlatButton edit;
+	private JLabel manage;
+	private FlatButton create;
+	private FlatButton delete;
+	private FlatButton edit;
 	
-	JComboBox choicesRemove;
-	JFrame frameRemovePrompt;
-	JFrame frameCreatePrompt;
-	JTextField createInput;
+	private JComboBox choicesRemove;
+	private JFrame frameRemovePrompt;
+	private JFrame frameCreatePrompt;
+	private JTextField createInput;
 	 
-	JPanel tasksPanel;
+	private JPanel tasksPanel;
 	 
-	FlatButton addCategory;
-	FlatButton deleteCategory;
+	private FlatButton addCategory;
+	private FlatButton deleteCategory;
 	
-	TaskGrid taskGrid;
-	JFrame frame;
+	private TaskGrid taskGrid;
+	private JFrame frame;
 	
-	JPanel editScreen;
+	private JPanel editScreen;
 	
-	ArrayList<Task> selected;
+	private ArrayList<Task> selected;
 	
-	Color green = new Color(191, 227, 74);
-	Color yellow = new Color(255, 255, 160);
-	Color blue = new Color(99, 195, 210);
+	private Color green = new Color(191, 227, 74);
+	private Color yellow = new Color(255, 255, 160);
+	private Color blue = new Color(99, 195, 210);
 	
 	private String[] catS= {"Personal","Work","Other","All Tasks"};
 	
@@ -64,31 +72,23 @@ public class TaskMaster {
 		
 	}
 	
+	/**
+	 * I am sorry about this one. If you are reading this, I didn't have time 
+	 * to break it into smaller parts before submission.
+	 * It initializes all the UI components. 
+	 */
 	public void go(){
 		taskGrid = new TaskGrid(this, categoryNames);  
+		 
+		taskGrid.createNewTask(
+				"Welcome! \nTo select a Task, click in the dark green area. \n\nTo edit it, select it and press edit (in the toolbar, towards the bottom), or double click.",
+				ImportanceLevel.normal, "");
+		taskGrid.createNewTask("Have you tried sorting tasks differently yet? Look at the top of the toolbar. \n\nWhen sorting by due date tasks with no due date rise to the top.", ImportanceLevel.low, "");
+		taskGrid.createNewTask("I have high priority. \n\nGreen is normal priority, and Blue is low priority.", ImportanceLevel.high, "05/21"); 
+		taskGrid.createNewTask("To delete, select as many tasks as you wish and press delete. \n\nIf you change your mind, double click in the dark grey area to remove the selection.", ImportanceLevel.low, "05/27");
+		taskGrid.createNewTask("Default sort shows current tasks (due yesterday, today, tomorrow, and the next day) sorted by priority, and then the rest, sorted by priority.", ImportanceLevel.normal, "05/26");
+		taskGrid.createNewTask("Thanks for looking through these! Now you're ready for your tasks! \n\nYou can do it, young Task Wizard!", ImportanceLevel.high, "05/27");
 		
-		/*taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
-		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
-		taskGrid.createNewTask("Third ", ImportanceLevel.high, "05/02");
-		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, "05/03");
-		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, "05/04"); // commented out from here
-		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, "05/09");
-		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, "05/08");
-		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, "05/06"); 
-		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, "05/07"); 
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, ""); 
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
-		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
-		taskGrid.createNewTask("Third ", ImportanceLevel.high, "05/02");
-		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, "05/03");
-		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, "05/04"); // commented out from here
-		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, "05/09");
-		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, "05/08");
-		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, "05/06"); 
-		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, "05/07"); 
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, ""); */
-		 
-		 
 		
 		frame = new JFrame();
 		
@@ -124,6 +124,7 @@ public class TaskMaster {
 		edit = new FlatButton(blue,"Edit");
 		delete = new FlatButton(blue,"Delete"); 
 		
+		// create, edit, delete area
 		JPanel manageTasks = new JPanel();
 		JPanel manageTButtons = new JPanel(); 
 		manageTButtons.setLayout(new BoxLayout(manageTButtons, BoxLayout.Y_AXIS));
@@ -136,6 +137,7 @@ public class TaskMaster {
 		manageTasks.add(manage, BorderLayout.NORTH);
 		manageTasks.add(manageTButtons, BorderLayout.CENTER);
 		
+		// sorting area
 		JPanel manageSort = new JPanel();
 		JPanel manageSButtons = new JPanel(); 
 		manageSButtons.setBorder(BorderFactory.createEmptyBorder(8,0,0,0));
@@ -149,11 +151,9 @@ public class TaskMaster {
 		manageSort.add(manageSButtons, BorderLayout.CENTER); 
 		manageSButtons.setOpaque(false);
 		
+		// category area
 		JPanel manageCategory = new JPanel(); 
-		
-		
 		JPanel manageCButtons = new JPanel();
-		
 		manageCButtons.setLayout(new BoxLayout(manageCButtons, BoxLayout.Y_AXIS)); 
 		manageCButtons.setBorder(BorderFactory.createEmptyBorder(2,0,0,0));  
 		manageCButtons.add(addCategory);
@@ -175,6 +175,8 @@ public class TaskMaster {
 		manageSort.setOpaque(false);
 		manageTasks.setOpaque(false);
 		 
+		
+		
 		toolbar.setBorder(BorderFactory.createEmptyBorder(5,20,5,5));    
 		toolbar.add(manageSort);
 		toolbar.add(manageCategory);
@@ -182,22 +184,20 @@ public class TaskMaster {
 		 
 		initListeners(); 
 		 
-		
+		// task display area
 		scroll = new JScrollPane(taskGrid);
-		scroll.setBackground(Color.DARK_GRAY);
+		scroll.setBackground(new Color(32,32,32));
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		JScrollBar bar = new JScrollBar(); 
 		//bar.setBackground(blue);
 		bar.setOpaque(false); 
 		// **bar.setUI(new FlatScrollBar(blue));
-		// **scroll.setVerticalScrollBar(bar);
-		//scroll.setPreferredSize(new Dimension(900, 500));
+		// **scroll.setVerticalScrollBar(bar); 
 		
 		//set layout and size of frame 
 		frame.getContentPane().setLayout(new BorderLayout());
-		frame.getContentPane().add(BorderLayout.WEST,toolbar); 
-		//frame.getContentPane().add(BorderLayout.CENTER,taskGrid);  
+		frame.getContentPane().add(BorderLayout.WEST,toolbar);  
 		frame.getContentPane().add(BorderLayout.CENTER,scroll);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,538);
@@ -206,7 +206,17 @@ public class TaskMaster {
 		frame.setLocationRelativeTo(null); 
 					 
 	}
-	
+
+	/**
+	 * I told you I was sorry about go().
+	 * I mean it more here. 
+	 * 
+	 * Again, if you're reading this I didn't have time to fix it.
+	 * I'm probably just making you curious. Oops.
+	 * 
+	 * Adds all the listeners to all the components.
+	 * Therein lies the problem. 
+	 */
 	public void initListeners(){
 		defaultS.addActionListener(new ActionListener() 
 	    {           	
@@ -431,6 +441,9 @@ public class TaskMaster {
 		});
 	}
 	
+	/**
+	 * Open an edit screen for the given task. 
+	 */
 	public void openEditScreen(Task toEdit){
 		EditScreen ed = new EditScreen(this, toEdit, categoryNames);
     	editScreen = ed.getJPanel();
@@ -441,6 +454,9 @@ public class TaskMaster {
     	frame.validate();
 	}
 	
+	/**
+	 * Switch back to displaying tasks, handle any updates from the create/edit screen.
+	 */
 	public void closeEditScreen(boolean saved, Task original, Task newTask){
 		if(original != null){ 
 				selected.remove(original);
@@ -464,6 +480,9 @@ public class TaskMaster {
 		switchEditToGrid();
 	}
 	
+	/**
+	 * Perform the swap from Edit/Create's panel to the Task Display panel
+	 */
 	private void switchEditToGrid(){
 		if(editScreen != null){
 			frame.remove(editScreen);
@@ -476,14 +495,23 @@ public class TaskMaster {
 		frame.repaint();
 	}
 	
+	/**
+	 * Make the task selected 
+	 */
 	public void addSelection(Task selected){
 		this.selected.add(selected);
 	}
 	
+	/**
+	 * Unselect the task 
+	 */
 	public void removeSelection(Task remove){
 		selected.remove(remove);
 	}
 	
+	/**
+	 * De-select all selected tasks
+	 */
 	public void deselectAll(){
 		while(selected.size() != 0){
 			Task current = selected.remove(selected.size()-1);
@@ -491,6 +519,10 @@ public class TaskMaster {
 		}
 	}
 	
+	/**
+	 * Start everything. Yay!
+	 * @param args none expected
+	 */
 	public static void main(String[] args){
 		TaskMaster taskMaster = new TaskMaster();
 		taskMaster.go();

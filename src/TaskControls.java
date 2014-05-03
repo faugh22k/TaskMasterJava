@@ -8,14 +8,14 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
+ * Currently empty of buttons, but exists due to possibility of expansion.
  * To hold all the buttons, display in linear view (horizontal)
  */
 public class TaskControls extends JPanel{
 
 	Color background; 
 
-    public TaskControls() { 
-        // TODO set horizontal
+    public TaskControls() {  
     	background = new Color(79, 129, 0);  
     	this.setBackground(background); 
     	this.setSize(new Dimension(200, 50)); 

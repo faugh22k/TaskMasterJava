@@ -5,6 +5,19 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/**
+ * A custom priority queue. We need to know the order 
+ * of the tasks, but we can't make them comparable and 
+ * simply sort them, because they need to be sorted in 
+ * many different ways simulataneously (in storage). 
+ * 
+ * Thus, custom queue (custom because Java's use heaps,
+ * so we can't get at the order directly). 
+ * 
+ * 
+ * @author Kim, Jackie
+ *
+ */
 public class TaskSorter implements Iterable<Task> { 
 
 	private LinkedList<Task> list;
@@ -18,6 +31,9 @@ public class TaskSorter implements Iterable<Task> {
 		array = new ArrayList<Task>();
 	}
 	
+	/**
+	 * Place the task as high as possible in the queue 
+	 */
 	public void add(Task toAdd){ 
 		
 		Task current;

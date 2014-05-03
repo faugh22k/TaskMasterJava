@@ -9,9 +9,7 @@ import javax.swing.JTextArea;
 /**
  * Store and display the text for the task.
  */
-public class TaskText extends JPanel{
-    // TODO text view object, or a different text display object?
-    // TODO ...Or could simply put text storage in TaskInfo, add to a text view from task
+public class TaskText extends JPanel{ 
 
 	JTextArea textArea;
 	

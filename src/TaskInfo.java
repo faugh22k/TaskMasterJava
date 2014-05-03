@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 /**
  * Store all of the settings of the task
- * Display the important ones (title, if we have titles, and due date)
+ * Display the important ones  
  */
 public class TaskInfo extends JPanel{
 
@@ -36,7 +36,11 @@ public class TaskInfo extends JPanel{
     
    
 
-    // primary constructor 
+    /**
+     * Initializes the two primary fields.
+     * This does not include Task Text, because there was almost a custom 
+     * JTextArea for that, and it was kept separate to allow for that in the future. 
+     */
     public TaskInfo(ImportanceLevel level, String due){ 
         created = new Date();
         edited = created;
@@ -64,6 +68,10 @@ public class TaskInfo extends JPanel{
         determineIsCurrent(now);
     }
 
+    /**
+     * Analyze due date vs current date to determine whether should be current.  
+     * @return true if isCurrent has been changed. 
+     */
 	public boolean determineIsCurrent(Date now) {
 		boolean updated = false;
 		boolean tmp = false;
@@ -75,7 +83,7 @@ public class TaskInfo extends JPanel{
 		 * tasks from farther back than yesterday fall out of current current 
 		 * so that they don't clutter up the immediate tasks.  
 		 */
-		if (distance <= 2 && distance >= -1) {
+		if (distance <= 2 && distance >= -1) { 
 			tmp = true;
 		}
 
@@ -87,6 +95,9 @@ public class TaskInfo extends JPanel{
 		return updated;
 	}
     
+	/**
+	 * Calculates number of days in between now and due date. 
+	 */
     private int determineDistance(Date now){
     	if(due == null){
     		return 0;
@@ -100,6 +111,7 @@ public class TaskInfo extends JPanel{
 		
 		int monthD = due.getMonth();
 		int dayD = due.getDate();
+		 
 		
 		// the task was due the previous month (mod handles the case where it was due in December)
 		if ((monthD + 1) % 12 == monthN){ 
@@ -119,7 +131,7 @@ public class TaskInfo extends JPanel{
 			//distance = Math.max(dayD - dayN, dayN - dayD);
 			distance = dayD - dayN;
 		} 
-    	 
+    	  
     	return distance;
     }
      
@@ -159,6 +171,10 @@ public class TaskInfo extends JPanel{
         
     }
     
+    /**
+     * Sets the Date from a string
+     * @param due the string with the Date (mm/dd)
+     */
     public void parseDue(String due){
     	try {
     		Date tmp = formatDate.parse(due);
@@ -166,6 +182,9 @@ public class TaskInfo extends JPanel{
 		} catch (ParseException e) {}
     }
     
+    /**
+     * Translates the Date into a readable string (mm/dd) 
+     */
     public String getFormattedDate(){
     	if(due == null){
     		return "";
