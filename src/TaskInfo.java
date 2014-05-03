@@ -194,8 +194,7 @@ public class TaskInfo extends JPanel{
     }
 
     public void addCategory(String category){
-        if(!categories.contains(category)){
-        	System.out.println("adding category: " + category);
+        if(!categories.contains(category)){ 
             categories.add(category);
         }
     }
@@ -204,12 +203,7 @@ public class TaskInfo extends JPanel{
         categories.remove(category);
     }
 
-    public boolean isCategory(String category){
-    	if(categories.contains(category)){
-    		System.out.println("I am a " + category + " task!");
-    	} else {
-    		System.out.println("I am not a " + category + " task!");  
-    	}
+    public boolean isCategory(String category){ 
         return categories.contains(category);
     }
 }

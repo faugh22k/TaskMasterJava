@@ -57,7 +57,7 @@ public class TaskMaster {
 	public TaskMaster(){
 		selected = new ArrayList<Task>();
 		categoryNames = new ArrayList<String>(6);
-		//categoryNames.add("All Tasks");
+		categoryNames.add("All Tasks");
 		categoryNames.add("Personal");
 		categoryNames.add("Work");
 		categoryNames.add("Other");
@@ -67,7 +67,7 @@ public class TaskMaster {
 	public void go(){
 		taskGrid = new TaskGrid(this, categoryNames);  
 		
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
+		/*taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
 		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
 		taskGrid.createNewTask("Third ", ImportanceLevel.high, "05/02");
 		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, "05/03");
@@ -86,7 +86,7 @@ public class TaskMaster {
 		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, "05/08");
 		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, "05/06"); 
 		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, "05/07"); 
-		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, ""); 
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, ""); */
 		 
 		 
 		
@@ -107,7 +107,7 @@ public class TaskMaster {
 		category.setForeground(Color.WHITE);
 		//categories = new JComboBox<String>(catS);  
 		categories = new JComboBox<String>();
-		categories.addItem("All Tasks");  
+		//categories.addItem("All Tasks");  
 		for(String name : categoryNames){
 			categories.addItem(name);
 		}
@@ -268,15 +268,12 @@ public class TaskMaster {
 		{
 			public void actionPerformed(ActionEvent e){
 
-				int selected = categories.getSelectedIndex();
-				if(selected == 0){//personal
-					taskGrid.setDisplayState(DisplayState.category, catS[0]); 
-				} else if (selected == 1){//work
-				    taskGrid.setDisplayState(DisplayState.category, catS[1]); 
-				} else if(selected == 1){//other
-					taskGrid.setDisplayState(DisplayState.category, catS[2]); 
-				}else{
-					taskGrid.setDisplayState(DisplayState.all, catS[3]); 
+				String selected = (String) categories.getSelectedItem();
+				
+				if(!selected.equals("All Tasks")){//personal
+					taskGrid.setDisplayState(DisplayState.category, (String) categories.getSelectedItem()); 
+				} else{
+					taskGrid.setDisplayState(DisplayState.all, (String) categories.getSelectedItem()); 
 				} 
 			}
 		});
@@ -391,10 +388,11 @@ public class TaskMaster {
 						String toRemove = (String) choicesRemove.getSelectedItem();
 						categoryNames.remove(toRemove);
 						taskGrid.removeCategory(toRemove);
-						categories.removeItem(toRemove);
 						if(categories.getSelectedItem().equals(toRemove)){
-							categories.setSelectedIndex(0);
-						}  
+							categories.setSelectedItem("All Tasks");
+						} 
+						categories.removeItem(toRemove);
+						 
 						frameRemovePrompt.dispatchEvent(new WindowEvent(frameRemovePrompt, WindowEvent.WINDOW_CLOSING));
 					}
 				});
@@ -444,8 +442,7 @@ public class TaskMaster {
 	}
 	
 	public void closeEditScreen(boolean saved, Task original, Task newTask){
-		if(original != null){
-				System.out.println("deselecting the task that was selected");
+		if(original != null){ 
 				selected.remove(original);
 				original.changeSelection();
 			}
@@ -455,8 +452,7 @@ public class TaskMaster {
 			return;
 		}
 		
-		if(original != null){
-			System.out.println("updating the task!");
+		if(original != null){ 
 			taskGrid.upDateTask(original, newTask);
 		} else {
 			taskGrid.addNewTask(newTask);

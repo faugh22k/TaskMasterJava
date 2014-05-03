@@ -237,19 +237,14 @@ public class EditScreen extends JPanel{
 			date.setText(editingTask.getFormattedDueDate());
 			background = editingTask.getColor();
 			
-			int index = 0;
-			System.out.println("categoryNames = " + categoryNames); 
-			System.out.println("editing task = " + editingTask);
-			System.out.println("searching through categoryNames for matching category");
-			for(int i = 0; i < categoryNames.size(); i++){
-				System.out.println("i = " + i);
-				System.out.println("the category is: " + categoryNames.get(i));
-				if(editingTask.isCategory(categoryNames.get(i))){
-					index = i;
+			int index = 0; 
+			for(String name : categoryNames){  
+				if(editingTask.isCategory(name)){
+					categories.setSelectedItem(name); 
 					break;
 				} 	
 			}
-			categories.setSelectedIndex(index);
+			
 		} else {
 			background = Task.normal;
 			priority.setSelectedIndex(1);
