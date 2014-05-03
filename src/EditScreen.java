@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -42,6 +43,8 @@ public class EditScreen extends JPanel{
 	private String[] catS= {"Personal","Work","Other"};
 	private String[] priorityS = {"Low","Normal","High"};
 	
+	private ArrayList<String> categoryNames;
+	
 	private Task editingTask; 
 	private Color background;
 	private Color textAreaShading;
@@ -53,10 +56,12 @@ public class EditScreen extends JPanel{
 	Color yellow = new Color(255, 255, 160);
 	Color blue = new Color(99, 195, 210);
 	
-	EditScreen(TaskMaster taskMaster, Task toEdit){
+	EditScreen(TaskMaster taskMaster, Task toEdit, ArrayList<String> names){
 		this.taskMaster = taskMaster;
 		editingTask = toEdit;
+		categoryNames = names;
 		textAreaShading = new Color(5, 250, 250, 250); // was 10,20,20,20 // was 10, 200, 200, 200
+		
 		initBackground();
 		this.setLayout(new BorderLayout());
 		this.setBackground(background); //this might not be initializedset
@@ -66,7 +71,12 @@ public class EditScreen extends JPanel{
 		topToolbar.setOpaque(false);
 		topToolbar.setLayout(new BoxLayout(topToolbar, BoxLayout.X_AXIS));
 		category = new JLabel("Choose type:");
-		categories = new JComboBox(catS);
+		categories = new JComboBox();
+		for(String name : categoryNames){
+			if(!name.equals("All Tasks")){
+				categories.addItem(name);
+			}
+		}
 		date = new JTextField(10);
 		topToolbar.add(category);
 		topToolbar.add(categories);
@@ -108,7 +118,7 @@ public class EditScreen extends JPanel{
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		
 		initListeners();
-		initEditingTask();
+		setInitialValues();
 		this.setVisible(true);
 		textPanel.setVisible(true);
 		newText.setVisible(true);
@@ -220,12 +230,28 @@ public class EditScreen extends JPanel{
 	public void resetBackground(){
 		this.setBackground(background);
 	}
-	public void initEditingTask(){
+	public void setInitialValues(){
 		if(editingTask != null){
 			newText.setText(editingTask.getText());
 			priority.setSelectedIndex(editingTask.getImportance().ordinal()); 
 			date.setText(editingTask.getFormattedDueDate());
+			background = editingTask.getColor();
+			
+			int index = 0;
+			System.out.println("categoryNames = " + categoryNames); 
+			System.out.println("editing task = " + editingTask);
+			System.out.println("searching through categoryNames for matching category");
+			for(int i = 0; i < categoryNames.size(); i++){
+				System.out.println("i = " + i);
+				System.out.println("the category is: " + categoryNames.get(i));
+				if(editingTask.isCategory(categoryNames.get(i))){
+					index = i;
+					break;
+				} 	
+			}
+			categories.setSelectedIndex(index);
 		} else {
+			background = Task.normal;
 			priority.setSelectedIndex(1);
 			newText.setText(initialTaskText);
 			date.setText(initialDateText);

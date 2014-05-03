@@ -36,9 +36,9 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
     //private Paint background;
     private Color background; 
     
-    public static Color high;
-    public static Color normal;
-    public static Color low;
+    public static Color normal = new Color(191, 227, 74); 
+    public static Color high = new Color(255, 255, 160);
+    public static Color low = new Color(99, 195, 210);
     
    public static int width = 160;
    public static int height = 170;
@@ -74,9 +74,7 @@ public class Task extends JPanel implements MouseListener/*FocusListener*/ {
         this.add(this.text, BorderLayout.CENTER);
         this.add(controls, BorderLayout.SOUTH);
          
-        normal = new Color(191, 227, 74); 
-        high = new Color(255, 255, 160);
-        low = new Color(99, 195, 210);
+         
         
         if(importance == ImportanceLevel.high){
         	background = high;

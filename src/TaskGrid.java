@@ -3,6 +3,7 @@ package taskMaster;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class TaskGrid extends JPanel{
 
     private LinkedList<Task> selectedCategory;
 
-    private HashSet<String> categories;
+    private ArrayList<String> categories;
     private TaskMaster taskMaster;
     
     private String currentCategory;
@@ -59,7 +60,7 @@ public class TaskGrid extends JPanel{
     private Color background;
     private Color taskColor;
 
-    public TaskGrid(TaskMaster taskMaster){  
+    public TaskGrid(TaskMaster taskMaster, ArrayList<String> names){  
         // TODO read in initial values from memory somewhere??
 
     	// infinite rows, five columns
@@ -78,7 +79,7 @@ public class TaskGrid extends JPanel{
         current = new LinkedList<Task>();
         inFuture = new LinkedList<Task>();
 
-        categories = new HashSet<String>();
+        categories = names;
 
         orderedByStrictDate = new TaskSorter(new TaskOrderStrictDueDate());
         orderedByRelaxedDate = new TaskSorter(new TaskOrderRelaxedDueDate());
@@ -114,15 +115,12 @@ public class TaskGrid extends JPanel{
     			numberTasks += selectedCategory.size();
     		}
     	}
-    	
-    	System.out.println("number tasks: " + numberTasks);
-    	int numberRows = (numberTasks/gridWidth) + 1;
-    	System.out.println("number rows: " + numberRows);
+    	 
+    	int numberRows = (numberTasks/gridWidth) + 1; 
     	
     	height = numberRows*Task.height;
     	width = gridWidth*Task.width;
-    	
-    	System.out.println("I want to be size: (" + width  + "," +  height + ")" );
+    	 
     	
     	setPreferredSize(new Dimension(width,height)); 
     	setMinimumSize(new Dimension(width, Task.height*2));
@@ -327,6 +325,15 @@ public class TaskGrid extends JPanel{
     public void addCategory(String category){
         if(!categories.contains(category)){
             categories.add(category);
+        }
+    }
+    
+    public void removeCategory(String category){
+        categories.remove(category);
+        
+        if(displayState == DisplayState.category && currentCategory.equals(category)){
+        	displayState = DisplayState.all;
+        	redisplayAll();
         }
     }
 

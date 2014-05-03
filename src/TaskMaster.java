@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.swing.JComponent.*;
 
@@ -27,6 +28,11 @@ public class TaskMaster {
 	FlatButton create;
 	FlatButton delete;
 	FlatButton edit;
+	
+	JComboBox choicesRemove;
+	JFrame frameRemovePrompt;
+	JFrame frameCreatePrompt;
+	JTextField createInput;
 	 
 	JPanel tasksPanel;
 	 
@@ -40,22 +46,26 @@ public class TaskMaster {
 	
 	ArrayList<Task> selected;
 	
+	Color green = new Color(191, 227, 74);
+	Color yellow = new Color(255, 255, 160);
+	Color blue = new Color(99, 195, 210);
+	
 	private String[] catS= {"Personal","Work","Other","All Tasks"};
+	
+	private ArrayList<String> categoryNames;
+	
 	public TaskMaster(){
 		selected = new ArrayList<Task>();
+		categoryNames = new ArrayList<String>(6);
+		//categoryNames.add("All Tasks");
+		categoryNames.add("Personal");
+		categoryNames.add("Work");
+		categoryNames.add("Other");
+		
 	}
 	
 	public void go(){
-		taskGrid = new TaskGrid(this);
-		/*taskGrid.createNewTask("Hello world!", ImportanceLevel.low, new Date(2014, 5, 12));
-		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, new Date(2014, 5, 11));
-		taskGrid.createNewTask("Third ", ImportanceLevel.high, new Date(2014, 5, 10));
-		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, new Date(2014, 5, 9));
-		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, new Date(2014, 5, 8));
-		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, new Date(2014, 5, 7));
-		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, new Date(2014, 5, 6));
-		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, new Date(2014, 5, 5));
-		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, new Date(2014, 5, 4));*/
+		taskGrid = new TaskGrid(this, categoryNames);  
 		
 		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
 		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
@@ -66,23 +76,27 @@ public class TaskMaster {
 		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, "05/08");
 		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, "05/06"); 
 		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, "05/07"); 
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, ""); 
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, "");   
+		taskGrid.createNewTask("Second hi hi  ", ImportanceLevel.normal, "05/01");   
+		taskGrid.createNewTask("Third ", ImportanceLevel.high, "05/02");
+		taskGrid.createNewTask("Fourth ", ImportanceLevel.low, "05/03");
+		taskGrid.createNewTask("Fifth :) ", ImportanceLevel.normal, "05/04"); // commented out from here
+		taskGrid.createNewTask("Sixth ", ImportanceLevel.high, "05/09");
+		taskGrid.createNewTask("Seventh !", ImportanceLevel.low, "05/08");
+		taskGrid.createNewTask("Eighth  ", ImportanceLevel.normal, "05/06"); 
+		taskGrid.createNewTask("Ninth :)  ", ImportanceLevel.high, "05/07"); 
+		taskGrid.createNewTask("Hello world!", ImportanceLevel.low, ""); 
 		 
-		Color green = new Color(191, 227, 74);
-		Color yellow = new Color(255, 255, 160);
-		Color blue = new Color(99, 195, 210);
+		 
 		
 		frame = new JFrame();
 		
 		toolbar = new JPanel();
-		toolbar.setMaximumSize(new Dimension(50, 800));
-		//toolbar.setMinimumSize(new Dimension(50, 200));
-		//toolbar.setBackground(Color.darkGray);
-		toolbar.setBackground(Color.darkGray);
-		//toolbar.setBackground(new Color(253, 250, 199));
+		toolbar.setMaximumSize(new Dimension(50, 800)); 
+		toolbar.setBackground(Color.darkGray); 
 		toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.Y_AXIS));
-		 
-		//need to pin it to the left?
-		
+		  
 		sortBy = new JLabel ("Sort by:");
 		sortBy.setForeground(Color.WHITE);
 		defaultS = new FlatButton(blue, "Default");
@@ -91,10 +105,14 @@ public class TaskMaster {
 		
 		category = new JLabel("Category");
 		category.setForeground(Color.WHITE);
-		categories = new JComboBox<String>(catS); //currently empty
-		categories.setPrototypeDisplayValue("XXXXXXXXX"); 
-		//categories.setPreferredSize(new Dimension(50, 20));
-		categories.setSelectedIndex(3);
+		//categories = new JComboBox<String>(catS);  
+		categories = new JComboBox<String>();
+		categories.addItem("All Tasks");  
+		for(String name : categoryNames){
+			categories.addItem(name);
+		}
+		categories.setPrototypeDisplayValue("XXXXXXXXX");  
+		categories.setSelectedIndex(0);
 		addCategory = new FlatButton(blue, "Add");
 		deleteCategory = new FlatButton(blue, "Remove"); 
 		
@@ -169,6 +187,11 @@ public class TaskMaster {
 		scroll.setBackground(Color.DARK_GRAY);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		JScrollBar bar = new JScrollBar(); 
+		//bar.setBackground(blue);
+		bar.setOpaque(false); 
+		// **bar.setUI(new FlatScrollBar(blue));
+		// **scroll.setVerticalScrollBar(bar);
 		//scroll.setPreferredSize(new Dimension(900, 500));
 		
 		//set layout and size of frame 
@@ -213,7 +236,9 @@ public class TaskMaster {
 	    {           	
 	        public void actionPerformed(ActionEvent e) 
 	        {        
-	        	openEditScreen(null);
+	        	if (editScreen == null) {
+	        		openEditScreen(null);
+	        	}
 	        }
 	    });
 
@@ -222,7 +247,7 @@ public class TaskMaster {
 	        public void actionPerformed(ActionEvent e) 
 	        {       
 	        //edit selected task	
-	        	if(selected.size() > 0){
+	        	if(selected.size() > 0 && editScreen == null){
 	        		openEditScreen(selected.get(selected.size()-1));
 	        	}
 	        }
@@ -252,19 +277,135 @@ public class TaskMaster {
 					taskGrid.setDisplayState(DisplayState.category, catS[2]); 
 				}else{
 					taskGrid.setDisplayState(DisplayState.all, catS[3]); 
-				}
+				} 
+			}
+		});
 
-				/*int selected = categories.getSelectedIndex();
-				if(selected == 0){//personal
-					taskGrid.setDisplayState(catS[0]); 
-				} else if (selected == 1){//work
-				    taskGrid.setDisplayState(catS[1]); 
-				} else if(selected == 1){//other
-					taskGrid.setDisplayState(catS[2]); 
-				}else{
-					taskGrid.setDisplayState(catS[3]); 
-				}*/ 
-			
+		addCategory.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e){
+				frameCreatePrompt = new JFrame();
+				JPanel add = new JPanel();
+				JPanel addComponents = new JPanel();
+				JPanel addButtons = new JPanel();
+				addComponents.setLayout(new BoxLayout(addComponents, BoxLayout.Y_AXIS)); 
+				add.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));  
+				addComponents.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); 
+				
+				Color background = new Color(32,32,32);
+
+				createInput = new JTextField();
+				FlatButton okay = new FlatButton(green, "okay");
+				FlatButton cancel = new FlatButton(green, "cancel");
+				JLabel prompt = new JLabel("What category would you like to create?");
+				prompt.setForeground(Color.WHITE);
+				
+				addButtons.add(cancel);
+				addButtons.add(okay);
+				addComponents.add(createInput); 
+				addComponents.add(addButtons);
+				add.add(prompt);
+				add.add(addComponents);
+				
+				add.setBackground(background);
+				addButtons.setOpaque(false);
+				addComponents.setOpaque(false);
+				
+				frameCreatePrompt.getContentPane().add(add); 
+				frameCreatePrompt.setSize(330,150); 
+				frameCreatePrompt.setVisible(true);
+				frameCreatePrompt.setFocusable(true); 
+				frameCreatePrompt.setLocationRelativeTo(frame);  
+				
+				okay.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e){
+						String toAdd = createInput.getText(); 
+						if(!toAdd.equals("")){
+							categoryNames.add(toAdd);
+							taskGrid.addCategory(toAdd);
+							categories.addItem(toAdd); 
+						}
+						
+						frameCreatePrompt.dispatchEvent(new WindowEvent(frameCreatePrompt, WindowEvent.WINDOW_CLOSING));
+					}
+				});
+
+				cancel.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent e){ 
+						frameCreatePrompt.dispatchEvent(new WindowEvent(frameCreatePrompt, WindowEvent.WINDOW_CLOSING));
+					}
+				});
+				
+			}
+		});
+
+		deleteCategory.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e){
+				frameRemovePrompt = new JFrame(); 
+				JPanel remove = new JPanel();
+				JPanel removeComponents = new JPanel();
+				JPanel removeButtons = new JPanel();
+				removeComponents.setLayout(new BoxLayout(removeComponents, BoxLayout.Y_AXIS)); 
+				remove.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));  
+				removeComponents.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));  
+
+				Color background = new Color(32,32,32);
+
+				FlatButton okay = new FlatButton(green, "okay");
+				FlatButton cancel = new FlatButton(green, "cancel");
+				JLabel prompt = new JLabel("What category would you like to remove?");
+				prompt.setForeground(Color.WHITE);
+
+				choicesRemove = new JComboBox<String>();
+				for(String name : categoryNames){
+					if(!name.equals("All Tasks")){
+						choicesRemove.addItem(name);
+					}
+				}  
+  
+				removeButtons.add(cancel); 
+				removeButtons.add(okay); 
+				removeComponents.add(choicesRemove); 
+				removeComponents.add(removeButtons);
+				remove.add(prompt);
+				remove.add(removeComponents);
+
+				remove.setBackground(background);
+				removeButtons.setOpaque(false);
+				removeComponents.setOpaque(false);
+
+				frameRemovePrompt.getContentPane().add(remove);
+
+				frameRemovePrompt.setSize(330,150);
+				frameRemovePrompt.setVisible(true);
+				frameRemovePrompt.setFocusable(true); 
+				frameRemovePrompt.setLocationRelativeTo(frame); 
+				//remove.add()
+
+				okay.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e){
+						String toRemove = (String) choicesRemove.getSelectedItem();
+						categoryNames.remove(toRemove);
+						taskGrid.removeCategory(toRemove);
+						categories.removeItem(toRemove);
+						if(categories.getSelectedItem().equals(toRemove)){
+							categories.setSelectedIndex(0);
+						}  
+						frameRemovePrompt.dispatchEvent(new WindowEvent(frameRemovePrompt, WindowEvent.WINDOW_CLOSING));
+					}
+				});
+
+				cancel.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent e){ 
+						frameRemovePrompt.dispatchEvent(new WindowEvent(frameRemovePrompt, WindowEvent.WINDOW_CLOSING));
+					}
+				});
+
 			}
 		});
 		
@@ -293,7 +434,7 @@ public class TaskMaster {
 	}
 	
 	public void openEditScreen(Task toEdit){
-		EditScreen ed = new EditScreen(this, toEdit);
+		EditScreen ed = new EditScreen(this, toEdit, categoryNames);
     	editScreen = ed.getJPanel();
     	//frame.remove(taskGrid);
     	frame.remove(scroll);
